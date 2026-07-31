@@ -1,2 +1,2 @@
 Run the authorized Reel materializer for JGA Fellowship OS PR #155.
-Attempt 6: deploy and report the acceptance preview inside the observable job.
+Attempt 7: publish the validated acceptance surface under /published/.
