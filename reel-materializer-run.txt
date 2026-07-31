@@ -1,1 +1,2 @@
 Run the authorized Reel materializer for JGA Fellowship OS PR #155.
+Attempt 2: install FFmpeg explicitly on the public runner.
