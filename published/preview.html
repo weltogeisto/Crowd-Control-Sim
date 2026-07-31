@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Leuchtfeuer Hype-Reel · Abnahme</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#071012;color:#fff;font-family:Georgia,serif}body{min-height:100dvh;background:radial-gradient(circle at 50% 22%,#496261 0,#183237 43%,#080d0f 78%);display:grid;place-items:center;padding:24px}.launch{width:82px;height:82px;border-radius:999px;border:1px solid #c58a45;background:#f2d39c;font-size:36px;box-shadow:0 18px 52px #0008;cursor:pointer}.label{margin-top:14px;text-align:center;font:700 12px/1.2 Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#f1d7a1}.overlay{position:fixed;inset:0;z-index:10;background:radial-gradient(circle at 50% 25%,#425b5b 0,#183239 42%,#070b0e 82%);display:none;align-items:center;justify-content:center;padding:18px}.overlay.open{display:flex}.card{position:relative;width:min(94vw,720px);border:1px solid #b9954d99;border-radius:34px;background:linear-gradient(155deg,#475c52cc,#272719e8);padding:32px;box-shadow:0 30px 90px #000c}.close{position:absolute;right:15px;top:15px;width:42px;height:42px;border-radius:50%;border:1px solid #ecd9a499;background:#f7edda;color:#4b2b18;font-size:25px;z-index:3}.frame{aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid #d3a85c;background:#000;box-shadow:0 15px 55px #0008}.frame video{display:block;width:100%;height:100%;object-fit:contain;background:#000}.retry{display:none;width:100%;margin-top:15px;border:1px solid #d6a967;border-radius:999px;background:#120b08dd;color:#fff1cc;padding:13px;font:700 16px/1.1 Georgia,serif;letter-spacing:.16em;text-transform:uppercase}.retry.show{display:block}@media(max-width:600px){.card{padding:28px 18px 22px;border-radius:28px}.close{right:8px;top:8px}.frame{border-radius:18px}}
+  </style>
+</head>
+<body>
+  <main><button class="launch" id="launch" aria-label="Leuchtfeuer entzünden">🔥</button><div class="label">Leuchtfeuer entzünden</div></main>
+  <section class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Hype-Reel">
+    <div class="card"><button class="close" id="close" aria-label="Schließen">×</button><div class="frame"><video id="video" muted playsinline preload="auto" poster="assets/leuchtfeuer-hype-reel-poster.webp"></video></div><button class="retry" id="retry">Animation starten</button></div>
+  </section>
+  <audio id="audio" preload="auto" src="assets/leuchtfeuer-hype-reel.mp3"></audio>
+  <script>
+    const launch=document.querySelector('#launch'),overlay=document.querySelector('#overlay'),close=document.querySelector('#close'),video=document.querySelector('#video'),audio=document.querySelector('#audio'),retry=document.querySelector('#retry');let run=0,timer=0;
+    async function start(){run++;retry.classList.remove('show');overlay.classList.add('open');video.pause();video.removeAttribute('src');video.load();video.src='assets/leuchtfeuer-hype-reel.mp4?run='+run;video.muted=true;video.currentTime=0;audio.pause();audio.currentTime=0;audio.volume=.86;try{await Promise.all([video.play(),audio.play()])}catch(e){try{await video.play()}catch(_){retry.classList.add('show')}}clearTimeout(timer);timer=setTimeout(()=>{if(video.paused||video.currentTime<.2)retry.classList.add('show')},1200)}
+    function stop(){clearTimeout(timer);video.pause();audio.pause();video.currentTime=0;audio.currentTime=0;overlay.classList.remove('open')}
+    launch.addEventListener('click',start);retry.addEventListener('click',start);close.addEventListener('click',stop);overlay.addEventListener('click',e=>{if(e.target===overlay)stop()});video.addEventListener('ended',()=>{video.currentTime=0;video.play().catch(()=>retry.classList.add('show'));audio.currentTime=0;audio.play().catch(()=>{})});
+  </script>
+</body>
+</html>
