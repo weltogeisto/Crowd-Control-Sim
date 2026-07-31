@@ -5,20 +5,102 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Leuchtfeuer Hype-Reel · Abnahme</title>
   <style>
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#071012;color:#fff;font-family:Georgia,serif}body{min-height:100dvh;background:radial-gradient(circle at 50% 22%,#496261 0,#183237 43%,#080d0f 78%);display:grid;place-items:center;padding:24px}.launch{width:82px;height:82px;border-radius:999px;border:1px solid #c58a45;background:#f2d39c;font-size:36px;box-shadow:0 18px 52px #0008;cursor:pointer}.label{margin-top:14px;text-align:center;font:700 12px/1.2 Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#f1d7a1}.overlay{position:fixed;inset:0;z-index:10;background:radial-gradient(circle at 50% 25%,#425b5b 0,#183239 42%,#070b0e 82%);display:none;align-items:center;justify-content:center;padding:18px}.overlay.open{display:flex}.card{position:relative;width:min(94vw,720px);border:1px solid #b9954d99;border-radius:34px;background:linear-gradient(155deg,#475c52cc,#272719e8);padding:32px;box-shadow:0 30px 90px #000c}.close{position:absolute;right:15px;top:15px;width:42px;height:42px;border-radius:50%;border:1px solid #ecd9a499;background:#f7edda;color:#4b2b18;font-size:25px;z-index:3}.frame{aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid #d3a85c;background:#000;box-shadow:0 15px 55px #0008}.frame video{display:block;width:100%;height:100%;object-fit:contain;background:#000}.retry{display:none;width:100%;margin-top:15px;border:1px solid #d6a967;border-radius:999px;background:#120b08dd;color:#fff1cc;padding:13px;font:700 16px/1.1 Georgia,serif;letter-spacing:.16em;text-transform:uppercase}.retry.show{display:block}@media(max-width:600px){.card{padding:28px 18px 22px;border-radius:28px}.close{right:8px;top:8px}.frame{border-radius:18px}}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#071012;color:#fff;font-family:Georgia,serif}
+    body{min-height:100dvh;background:radial-gradient(circle at 50% 22%,#496261 0,#183237 43%,#080d0f 78%);display:grid;place-items:center;padding:24px}
+    .launch{width:82px;height:82px;border-radius:999px;border:1px solid #c58a45;background:#f2d39c;font-size:36px;box-shadow:0 18px 52px #0008;cursor:pointer}
+    .label{margin-top:14px;text-align:center;font:700 12px/1.2 Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#f1d7a1}
+    .overlay{position:fixed;inset:0;z-index:10;background:radial-gradient(circle at 50% 25%,#425b5b 0,#183239 42%,#070b0e 82%);display:none;align-items:center;justify-content:center;padding:18px;overflow:auto}
+    .overlay.open{display:flex}
+    .card{position:relative;width:min(94vw,720px);border:1px solid #b9954d99;border-radius:34px;background:linear-gradient(155deg,#475c52cc,#272719e8);padding:30px 32px 26px;box-shadow:0 30px 90px #000c;text-align:center}
+    .close{position:absolute;right:15px;top:15px;width:42px;height:42px;border-radius:50%;border:1px solid #ecd9a499;background:#f7edda;color:#4b2b18;font-size:25px;z-index:3}
+    .eyebrow{margin:0;padding:0 48px;font:800 11px/1.25 Arial,sans-serif;letter-spacing:.31em;text-transform:uppercase;color:#f5ca72}
+    h1{margin:8px 0 0;font-size:clamp(28px,5vw,42px);line-height:1.02;color:#fff8d9}
+    .subtitle{margin:8px 0 0;font-size:15px;font-style:italic;color:#f7e8bddf}
+    .frame{position:relative;margin-top:20px;aspect-ratio:16/9;border-radius:22px;overflow:hidden;border:1px solid #d3a85c;background:#000;box-shadow:0 15px 55px #0008}
+    .frame video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+    .caption{margin:15px auto 0;max-width:620px;font-size:16px;line-height:1.48;color:#fff4cfeb}
+    .retry{display:none;position:absolute;left:24px;right:24px;bottom:20px;border:1px solid #d6a967;border-radius:999px;background:#120b08e8;color:#fff1cc;padding:13px;font:700 14px/1.1 Georgia,serif;letter-spacing:.14em;text-transform:uppercase}
+    .retry.show{display:block}
+    @media(max-width:600px){
+      .overlay{align-items:center;padding:12px}
+      .card{padding:26px 15px 20px;border-radius:27px}
+      .close{right:8px;top:8px;width:38px;height:38px}
+      .eyebrow{padding:0 40px;font-size:9px;letter-spacing:.25em}
+      h1{margin-top:7px;font-size:27px}
+      .subtitle{font-size:13px}
+      .frame{margin-top:16px;border-radius:17px}
+      .caption{margin-top:13px;font-size:14px;line-height:1.4}
+    }
   </style>
 </head>
 <body>
-  <main><button class="launch" id="launch" aria-label="Leuchtfeuer entzünden">🔥</button><div class="label">Leuchtfeuer entzünden</div></main>
-  <section class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Hype-Reel">
-    <div class="card"><button class="close" id="close" aria-label="Schließen">×</button><div class="frame"><video id="video" muted playsinline preload="auto" poster="assets/leuchtfeuer-hype-reel-poster.webp"></video></div><button class="retry" id="retry">Animation starten</button></div>
+  <main>
+    <button class="launch" id="launch" aria-label="Leuchtfeuer entzünden">🔥</button>
+    <div class="label">Leuchtfeuer entzünden</div>
+  </main>
+  <section class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Gondor ruft zu den Waffen">
+    <div class="card">
+      <button class="close" id="close" aria-label="Schließen">×</button>
+      <p class="eyebrow">Vor der Weißen Stadt</p>
+      <h1>Gondor ruft zu den Waffen</h1>
+      <p class="subtitle">Ein Krieger richtet sich an das versammelte Heer.</p>
+      <div class="frame">
+        <video id="video" playsinline preload="auto" loop poster="assets/leuchtfeuer-hype-reel-poster.webp"></video>
+        <button class="retry" id="retry">Film mit Ton starten</button>
+      </div>
+      <p class="caption">Über den Mauern erhebt er die Stimme. Reihen aus Stahl, marschierende Heere und Bilder vergangener Schlachten folgen seinem Ruf.</p>
+    </div>
   </section>
-  <audio id="audio" preload="auto" src="assets/leuchtfeuer-hype-reel.mp3"></audio>
   <script>
-    const launch=document.querySelector('#launch'),overlay=document.querySelector('#overlay'),close=document.querySelector('#close'),video=document.querySelector('#video'),audio=document.querySelector('#audio'),retry=document.querySelector('#retry');let run=0,timer=0;
-    async function start(){run++;retry.classList.remove('show');overlay.classList.add('open');video.pause();video.removeAttribute('src');video.load();video.src='assets/leuchtfeuer-hype-reel.mp4?run='+run;video.muted=true;video.currentTime=0;audio.pause();audio.currentTime=0;audio.volume=.86;try{await Promise.all([video.play(),audio.play()])}catch(e){try{await video.play()}catch(_){retry.classList.add('show')}}clearTimeout(timer);timer=setTimeout(()=>{if(video.paused||video.currentTime<.2)retry.classList.add('show')},1200)}
-    function stop(){clearTimeout(timer);video.pause();audio.pause();video.currentTime=0;audio.currentTime=0;overlay.classList.remove('open')}
-    launch.addEventListener('click',start);retry.addEventListener('click',start);close.addEventListener('click',stop);overlay.addEventListener('click',e=>{if(e.target===overlay)stop()});video.addEventListener('ended',()=>{video.currentTime=0;video.play().catch(()=>retry.classList.add('show'));audio.currentTime=0;audio.play().catch(()=>{})});
+    const launch=document.querySelector('#launch');
+    const overlay=document.querySelector('#overlay');
+    const close=document.querySelector('#close');
+    const video=document.querySelector('#video');
+    const retry=document.querySelector('#retry');
+    let run=0;
+    let timer=0;
+
+    async function playFromStart(){
+      retry.classList.remove('show');
+      video.muted=false;
+      video.volume=.86;
+      video.currentTime=0;
+      try{
+        await video.play();
+      }catch{
+        retry.classList.add('show');
+      }
+      clearTimeout(timer);
+      timer=setTimeout(()=>{
+        if(video.paused||video.currentTime<.2)retry.classList.add('show');
+      },1200);
+    }
+
+    async function start(){
+      run++;
+      overlay.classList.add('open');
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+      video.src='assets/leuchtfeuer-hype-reel.mp4?run='+run;
+      await playFromStart();
+    }
+
+    function stop(){
+      clearTimeout(timer);
+      video.pause();
+      video.currentTime=0;
+      overlay.classList.remove('open');
+      retry.classList.remove('show');
+    }
+
+    launch.addEventListener('click',start);
+    retry.addEventListener('click',playFromStart);
+    close.addEventListener('click',stop);
+    overlay.addEventListener('click',event=>{if(event.target===overlay)stop()});
+    video.addEventListener('playing',()=>retry.classList.remove('show'));
+    video.addEventListener('error',()=>retry.classList.add('show'));
   </script>
 </body>
 </html>
