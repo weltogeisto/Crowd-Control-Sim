@@ -7,6 +7,12 @@ on:
     paths:
       - scripts/materialize_reel.py
       - .github/workflows/materialize-reel.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/materialize_reel.py
+      - .github/workflows/materialize-reel.yml
+      - reel-materializer-run.txt
 
 permissions:
   contents: read
