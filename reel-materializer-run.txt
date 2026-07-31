@@ -1,2 +1,2 @@
 Run the authorized Reel materializer for JGA Fellowship OS PR #155.
-Attempt 5: confirm the GitHub Pages URL through the deployment workflow.
+Attempt 6: deploy and report the acceptance preview inside the observable job.
