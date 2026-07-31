@@ -30,8 +30,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install downloader dependencies
+      - name: Install FFmpeg and downloader dependencies
         run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
           python -m pip install --upgrade pip
           python -m pip install --upgrade requests yt-dlp
           ffmpeg -version
