@@ -16,11 +16,21 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+  issues: write
+
+concurrency:
+  group: reel-pages
+  cancel-in-progress: true
 
 jobs:
   materialize:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out bridge repository
         uses: actions/checkout@v4
@@ -55,9 +65,7 @@ jobs:
           if-no-files-found: error
           retention-days: 3
 
-      - name: Publish immutable validated assets
-        env:
-          TARGET_BRANCH: generated-reel-assets
+      - name: Prepare immutable assets and acceptance page
         run: |
           set -euo pipefail
           rm -rf /tmp/jga-reel-output
@@ -93,6 +101,12 @@ jobs:
           </body>
           </html>
           HTML
+
+      - name: Publish immutable validated assets
+        env:
+          TARGET_BRANCH: generated-reel-assets
+        run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch --orphan "$TARGET_BRANCH"
@@ -101,3 +115,24 @@ jobs:
           git add assets preview.html
           git commit -m "assets: publish validated JGA hype reel"
           git push --force origin "HEAD:refs/heads/$TARGET_BRANCH"
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: /tmp/jga-reel-output
+
+      - name: Deploy GitHub Pages acceptance page
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Record confirmed acceptance URL
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          gh issue comment 1 --repo "${{ github.repository }}" --body "PAGES_READY ${PAGE_URL}preview.html"
