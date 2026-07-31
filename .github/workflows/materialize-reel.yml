@@ -1,0 +1,48 @@
+name: Materialize authorized Reel
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/materialize_reel.py
+      - .github/workflows/materialize-reel.yml
+
+permissions:
+  contents: read
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out bridge repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install downloader dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade requests yt-dlp
+          ffmpeg -version
+          ffprobe -version
+
+      - name: Download, transcode and validate Reel
+        run: python scripts/materialize_reel.py
+
+      - name: Upload validated media package
+        uses: actions/upload-artifact@v4
+        with:
+          name: jga-leuchtfeuer-hype-reel
+          path: |
+            reel-build/leuchtfeuer-hype-reel.mp4
+            reel-build/leuchtfeuer-hype-reel.mp3
+            reel-build/leuchtfeuer-hype-reel-poster.webp
+            reel-build/validation-frame.jpg
+            reel-build/manifest.json
+          if-no-files-found: error
+          retention-days: 3
