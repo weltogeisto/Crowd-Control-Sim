@@ -6,6 +6,12 @@ on:
     paths:
       - published/preview.html
       - .github/workflows/smoke-reel-sync.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - published/preview.html
+      - .github/workflows/smoke-reel-sync.yml
+      - reel-sync-smoke-run.txt
   workflow_dispatch:
 
 permissions:
