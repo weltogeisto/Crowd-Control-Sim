@@ -1,0 +1,97 @@
+name: Smoke Reel synchronization
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - published/preview.html
+      - .github/workflows/smoke-reel-sync.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Chromium test runtime
+        run: |
+          npm install --no-save playwright@1.61.1
+          npx playwright install --with-deps chromium
+
+      - name: Measure first and second playback drift
+        run: |
+          python3 -m http.server 4173 --directory published >/tmp/reel-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID' EXIT
+          node <<'NODE'
+          const { chromium } = require('playwright');
+
+          const MAX_ALLOWED_DRIFT_SECONDS = 0.12;
+
+          async function measureRun(page, label) {
+            await page.click('#launch');
+            await page.waitForFunction(() => {
+              const video = document.querySelector('#video');
+              const audio = document.querySelector('#audio');
+              return video && audio && !video.paused && !audio.paused && video.currentTime > 0.5;
+            }, { timeout: 15_000 });
+
+            const samples = [];
+            for (let index = 0; index < 45; index += 1) {
+              const sample = await page.evaluate(() => {
+                const video = document.querySelector('#video');
+                const audio = document.querySelector('#audio');
+                return {
+                  videoTime: video.currentTime,
+                  audioTime: audio.currentTime,
+                  drift: Math.abs(video.currentTime - audio.currentTime),
+                  videoPaused: video.paused,
+                  audioPaused: audio.paused,
+                };
+              });
+              samples.push(sample);
+              await page.waitForTimeout(100);
+            }
+
+            const maxDrift = Math.max(...samples.map((sample) => sample.drift));
+            const averageDrift = samples.reduce((sum, sample) => sum + sample.drift, 0) / samples.length;
+            console.log(`${label}: max=${maxDrift.toFixed(4)}s average=${averageDrift.toFixed(4)}s`);
+            if (maxDrift > MAX_ALLOWED_DRIFT_SECONDS) {
+              throw new Error(`${label} exceeded drift limit: ${maxDrift}s`);
+            }
+            if (samples.some((sample) => sample.videoPaused || sample.audioPaused)) {
+              throw new Error(`${label} paused during measurement`);
+            }
+          }
+
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const context = await browser.newContext({
+              viewport: { width: 412, height: 915 },
+              userAgent: 'Mozilla/5.0 (Linux; Android 16; Pixel 9) AppleWebKit/537.36 Chrome/138 Mobile Safari/537.36',
+              isMobile: true,
+              hasTouch: true,
+            });
+            const page = await context.newPage();
+            await page.goto('http://127.0.0.1:4173/preview.html', { waitUntil: 'networkidle' });
+
+            await measureRun(page, 'first start');
+            await page.click('#close');
+            await page.waitForTimeout(300);
+            await measureRun(page, 'second start');
+
+            await browser.close();
+          })().catch((error) => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
