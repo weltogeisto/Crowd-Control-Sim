@@ -1,0 +1,42 @@
+name: Deploy Reel acceptance page
+
+on:
+  workflow_run:
+    workflows: ["Materialize authorized Reel"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out validated asset branch
+        uses: actions/checkout@v4
+        with:
+          ref: generated-reel-assets
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload acceptance page
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy acceptance page
+        id: deployment
+        uses: actions/deploy-pages@v4
