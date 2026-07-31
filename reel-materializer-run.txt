@@ -1,2 +1,2 @@
 Run the authorized Reel materializer for JGA Fellowship OS PR #155.
-Attempt 3: publish validated fixed assets and standalone acceptance preview.
+Attempt 4: refresh validated assets and deploy the GitHub Pages acceptance preview.
