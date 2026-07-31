@@ -46,18 +46,119 @@
       <h1>Gondor ruft zu den Waffen</h1>
       <p class="subtitle">Ein Krieger richtet sich an das versammelte Heer.</p>
       <div class="frame">
-        <video id="video" muted playsinline preload="auto" poster="assets/leuchtfeuer-hype-reel-poster.webp"></video>
+        <video id="video" muted playsinline preload="auto" loop poster="assets/leuchtfeuer-hype-reel-poster.webp"></video>
       </div>
       <p class="caption">Über den Mauern erhebt er die Stimme. Reihen aus Stahl, marschierende Heere und Bilder vergangener Schlachten folgen seinem Ruf.</p>
-      <button class="retry" id="retry">Animation starten</button>
+      <button class="retry" id="retry">Animation synchron starten</button>
     </div>
   </section>
   <audio id="audio" preload="auto" src="assets/leuchtfeuer-hype-reel.mp3"></audio>
   <script>
-    const launch=document.querySelector('#launch'),overlay=document.querySelector('#overlay'),close=document.querySelector('#close'),video=document.querySelector('#video'),audio=document.querySelector('#audio'),retry=document.querySelector('#retry');let run=0,timer=0;
-    async function start(){run++;retry.classList.remove('show');overlay.classList.add('open');video.pause();video.removeAttribute('src');video.load();video.src='assets/leuchtfeuer-hype-reel.mp4?run='+run;video.muted=true;video.currentTime=0;audio.pause();audio.currentTime=0;audio.volume=.86;try{await Promise.all([video.play(),audio.play()])}catch(e){try{await video.play()}catch(_){retry.classList.add('show')}}clearTimeout(timer);timer=setTimeout(()=>{if(video.paused||video.currentTime<.2)retry.classList.add('show')},1200)}
-    function stop(){clearTimeout(timer);video.pause();audio.pause();video.currentTime=0;audio.currentTime=0;overlay.classList.remove('open')}
-    launch.addEventListener('click',start);retry.addEventListener('click',start);close.addEventListener('click',stop);overlay.addEventListener('click',e=>{if(e.target===overlay)stop()});video.addEventListener('ended',()=>{video.currentTime=0;video.play().catch(()=>retry.classList.add('show'));audio.currentTime=0;audio.play().catch(()=>{})});
+    const launch=document.querySelector('#launch');
+    const overlay=document.querySelector('#overlay');
+    const close=document.querySelector('#close');
+    const video=document.querySelector('#video');
+    const audio=document.querySelector('#audio');
+    const retry=document.querySelector('#retry');
+    const MAX_DRIFT=.045;
+    let run=0;
+    let startTimer=0;
+    let syncFrame=0;
+    let lastVideoTime=0;
+
+    function stopSync(){
+      cancelAnimationFrame(syncFrame);
+      syncFrame=0;
+    }
+
+    function synchronize(force=false){
+      if(video.paused||video.ended){
+        if(!audio.paused)audio.pause();
+        return;
+      }
+      const target=Math.max(0,video.currentTime);
+      const looped=target+.25<lastVideoTime;
+      const drift=Math.abs(audio.currentTime-target);
+      if(force||looped||audio.paused||drift>MAX_DRIFT)audio.currentTime=target;
+      audio.playbackRate=video.playbackRate;
+      audio.volume=.86;
+      if(audio.paused){
+        audio.play().then(()=>retry.classList.remove('show')).catch(()=>retry.classList.add('show'));
+      }
+      lastVideoTime=target;
+    }
+
+    function syncLoop(){
+      synchronize(false);
+      syncFrame=requestAnimationFrame(syncLoop);
+    }
+
+    async function unlockAudio(){
+      audio.pause();
+      audio.currentTime=0;
+      audio.volume=0;
+      audio.playbackRate=1;
+      try{
+        await audio.play();
+        return true;
+      }catch{
+        retry.classList.add('show');
+        return false;
+      }
+    }
+
+    async function start(){
+      run++;
+      retry.classList.remove('show');
+      overlay.classList.add('open');
+      stopSync();
+      clearTimeout(startTimer);
+
+      const audioUnlocked=unlockAudio();
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+      video.src='assets/leuchtfeuer-hype-reel.mp4?run='+run;
+      video.muted=true;
+      video.currentTime=0;
+      lastVideoTime=0;
+
+      try{
+        await video.play();
+      }catch{
+        retry.classList.add('show');
+      }
+      await audioUnlocked;
+      startTimer=setTimeout(()=>{
+        if(video.paused||video.currentTime<.2)retry.classList.add('show');
+      },1200);
+    }
+
+    function stop(){
+      clearTimeout(startTimer);
+      stopSync();
+      video.pause();
+      audio.pause();
+      video.currentTime=0;
+      audio.currentTime=0;
+      overlay.classList.remove('open');
+    }
+
+    video.addEventListener('playing',()=>{
+      synchronize(true);
+      stopSync();
+      syncFrame=requestAnimationFrame(syncLoop);
+    });
+    video.addEventListener('seeking',()=>synchronize(true));
+    video.addEventListener('seeked',()=>synchronize(true));
+    video.addEventListener('ratechange',()=>{audio.playbackRate=video.playbackRate});
+    video.addEventListener('pause',()=>audio.pause());
+    video.addEventListener('ended',()=>{audio.pause();audio.currentTime=0});
+
+    launch.addEventListener('click',start);
+    retry.addEventListener('click',start);
+    close.addEventListener('click',stop);
+    overlay.addEventListener('click',event=>{if(event.target===overlay)stop()});
   </script>
 </body>
 </html>
