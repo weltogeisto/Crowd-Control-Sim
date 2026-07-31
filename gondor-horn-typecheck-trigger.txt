@@ -1,1 +1,2 @@
 Validate the featured Horn release export overlay before merging JGA Fellowship OS PR #155.
+Corrected fixture run 2.
