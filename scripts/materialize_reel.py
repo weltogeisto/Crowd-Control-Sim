@@ -6,7 +6,6 @@ import json
 import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin, urlparse
@@ -383,7 +382,8 @@ def main() -> None:
             filter_graph,
             "-map",
             "[vout]",
-            "-an",
+            "-map",
+            "0:a:0",
             "-r",
             "30",
             "-c:v",
@@ -398,6 +398,17 @@ def main() -> None:
             "20",
             "-pix_fmt",
             "yuv420p",
+            "-c:a",
+            "aac",
+            "-b:a",
+            "192k",
+            "-ar",
+            "48000",
+            "-ac",
+            "2",
+            "-af",
+            "loudnorm=I=-16:TP=-1.5:LRA=11",
+            "-shortest",
             "-movflags",
             "+faststart",
             str(VIDEO),
@@ -468,11 +479,17 @@ def main() -> None:
 
     final_probe = ffprobe(VIDEO)
     video_streams = streams_of_kind(final_probe, "video")
+    audio_streams = streams_of_kind(final_probe, "audio")
     if not video_streams:
         raise RuntimeError("Final MP4 has no video stream")
-    stream = video_streams[0]
-    if stream.get("codec_name") != "h264" or stream.get("pix_fmt") != "yuv420p":
-        raise RuntimeError(f"Final MP4 is not Android-safe H.264/yuv420p: {stream}")
+    if not audio_streams:
+        raise RuntimeError("Final MP4 has no embedded audio stream")
+    video_stream = video_streams[0]
+    audio_stream = audio_streams[0]
+    if video_stream.get("codec_name") != "h264" or video_stream.get("pix_fmt") != "yuv420p":
+        raise RuntimeError(f"Final MP4 is not Android-safe H.264/yuv420p: {video_stream}")
+    if audio_stream.get("codec_name") != "aac":
+        raise RuntimeError(f"Final MP4 audio is not AAC: {audio_stream}")
     if FRAME.stat().st_size < 10_000:
         raise RuntimeError("Final MP4 did not yield a real validation frame")
 
