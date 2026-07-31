@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
 
 concurrency:
   group: pages
@@ -40,3 +41,10 @@ jobs:
       - name: Deploy acceptance page
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Record confirmed acceptance URL
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          gh issue comment 1 --repo "${{ github.repository }}" --body "PAGES_READY ${PAGE_URL}preview.html"
