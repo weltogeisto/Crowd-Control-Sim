@@ -5,11 +5,15 @@ on:
     branches: [main]
     paths:
       - published/preview.html
+      - published/assets/leuchtfeuer-hype-reel.mp4
+      - published/assets/manifest.json
       - .github/workflows/smoke-reel-sync.yml
   pull_request:
     branches: [main]
     paths:
       - published/preview.html
+      - published/assets/leuchtfeuer-hype-reel.mp4
+      - published/assets/manifest.json
       - .github/workflows/smoke-reel-sync.yml
       - reel-sync-smoke-run.txt
   workflow_dispatch:
@@ -28,12 +32,38 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Verify embedded H.264 and AAC tracks
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python3 <<'PY'
+          import json
+          import subprocess
+
+          path = "published/assets/leuchtfeuer-hype-reel.mp4"
+          probe = json.loads(subprocess.check_output([
+              "ffprobe", "-v", "error", "-print_format", "json",
+              "-show_streams", "-show_format", path,
+          ]))
+          videos = [stream for stream in probe["streams"] if stream.get("codec_type") == "video"]
+          audios = [stream for stream in probe["streams"] if stream.get("codec_type") == "audio"]
+          assert len(videos) == 1, videos
+          assert len(audios) == 1, audios
+          assert videos[0]["codec_name"] == "h264", videos[0]
+          assert videos[0]["pix_fmt"] == "yuv420p", videos[0]
+          assert audios[0]["codec_name"] == "aac", audios[0]
+          video_duration = float(videos[0]["duration"])
+          audio_duration = float(audios[0]["duration"])
+          assert abs(video_duration - audio_duration) < 0.005, (video_duration, audio_duration)
+          print(f"single AV container: H.264 + AAC, duration={video_duration:.3f}s")
+          PY
+
       - name: Install Chromium test runtime
         run: |
           npm install --no-save playwright@1.61.1
           npx playwright install --with-deps chromium
 
-      - name: Measure first and second playback drift
+      - name: Verify first and second synchronized playback
         run: |
           python3 -m http.server 4173 --directory published >/tmp/reel-http.log 2>&1 &
           SERVER_PID=$!
@@ -41,42 +71,44 @@ jobs:
           node <<'NODE'
           const { chromium } = require('playwright');
 
-          const MAX_ALLOWED_DRIFT_SECONDS = 0.12;
-
-          async function measureRun(page, label) {
+          async function verifyRun(page, label, previousSrc = null) {
             await page.click('#launch');
             await page.waitForFunction(() => {
               const video = document.querySelector('#video');
-              const audio = document.querySelector('#audio');
-              return video && audio && !video.paused && !audio.paused && video.currentTime > 0.5;
+              return video && !video.paused && !video.muted && video.volume > 0 && video.currentTime > 0.5;
             }, { timeout: 15_000 });
 
-            const samples = [];
-            for (let index = 0; index < 45; index += 1) {
-              const sample = await page.evaluate(() => {
-                const video = document.querySelector('#video');
-                const audio = document.querySelector('#audio');
-                return {
-                  videoTime: video.currentTime,
-                  audioTime: audio.currentTime,
-                  drift: Math.abs(video.currentTime - audio.currentTime),
-                  videoPaused: video.paused,
-                  audioPaused: audio.paused,
-                };
-              });
-              samples.push(sample);
-              await page.waitForTimeout(100);
-            }
+            const start = await page.evaluate(() => {
+              const video = document.querySelector('#video');
+              return {
+                src: video.currentSrc,
+                currentTime: video.currentTime,
+                readyState: video.readyState,
+                width: video.videoWidth,
+                height: video.videoHeight,
+                muted: video.muted,
+                volume: video.volume,
+                error: video.error ? video.error.code : null,
+                audioElements: document.querySelectorAll('audio').length,
+              };
+            });
 
-            const maxDrift = Math.max(...samples.map((sample) => sample.drift));
-            const averageDrift = samples.reduce((sum, sample) => sum + sample.drift, 0) / samples.length;
-            console.log(`${label}: max=${maxDrift.toFixed(4)}s average=${averageDrift.toFixed(4)}s`);
-            if (maxDrift > MAX_ALLOWED_DRIFT_SECONDS) {
-              throw new Error(`${label} exceeded drift limit: ${maxDrift}s`);
+            if (start.readyState < 3) throw new Error(`${label}: readyState ${start.readyState}`);
+            if (start.width !== 1280 || start.height !== 720) {
+              throw new Error(`${label}: dimensions ${start.width}x${start.height}`);
             }
-            if (samples.some((sample) => sample.videoPaused || sample.audioPaused)) {
-              throw new Error(`${label} paused during measurement`);
+            if (start.muted || start.volume <= 0) throw new Error(`${label}: video is not audible`);
+            if (start.error !== null) throw new Error(`${label}: media error ${start.error}`);
+            if (start.audioElements !== 0) throw new Error(`${label}: separate audio element still exists`);
+            if (previousSrc && start.src === previousSrc) throw new Error(`${label}: player source was not remounted`);
+
+            await page.waitForTimeout(1800);
+            const advanced = await page.evaluate(() => document.querySelector('#video').currentTime);
+            if (advanced <= start.currentTime + 1) {
+              throw new Error(`${label}: timeline did not advance (${start.currentTime} -> ${advanced})`);
             }
+            console.log(`${label}: audible single-player timeline ${start.currentTime.toFixed(3)} -> ${advanced.toFixed(3)}`);
+            return start.src;
           }
 
           (async () => {
@@ -90,10 +122,10 @@ jobs:
             const page = await context.newPage();
             await page.goto('http://127.0.0.1:4173/preview.html', { waitUntil: 'networkidle' });
 
-            await measureRun(page, 'first start');
+            const firstSrc = await verifyRun(page, 'first start');
             await page.click('#close');
             await page.waitForTimeout(300);
-            await measureRun(page, 'second start');
+            await verifyRun(page, 'second start', firstSrc);
 
             await browser.close();
           })().catch((error) => {
