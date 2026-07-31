@@ -1,2 +1,2 @@
 Run the synchronized Reel smoke test through an observable pull request.
-Measured validation attempt: video-master audio lock, 45 ms correction threshold.
+Validation attempt: one H.264/AAC MP4, no separate audio element, first and second start.
