@@ -1,0 +1,2 @@
+Download the first 70 seconds of https://www.youtube.com/watch?v=xjItqTkLaU4 using browser impersonation.
+The final preview must end immediately after the line ending with “inside this Took.”
