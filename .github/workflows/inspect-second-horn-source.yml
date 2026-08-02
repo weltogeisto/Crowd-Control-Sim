@@ -1,0 +1,94 @@
+name: Inspect second Horn source
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/inspect-second-horn-source.yml
+      - second-horn-inspection-trigger.txt
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install media tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg jq
+          python -m pip install --upgrade pip
+          python -m pip install "yt-dlp>=2026.7.31" "faster-whisper>=1.1.1"
+
+      - name: Download and inspect source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p inspection
+          URL='https://www.youtube.com/watch?v=xjItqTkLaU4'
+
+          yt-dlp --dump-single-json --no-playlist "$URL" > inspection/metadata.json
+          yt-dlp \
+            --no-playlist \
+            --format 'bestvideo*+bestaudio/best' \
+            --merge-output-format mp4 \
+            --write-subs --write-auto-subs \
+            --sub-langs 'en.*,en' --sub-format vtt \
+            --output 'inspection/source.%(ext)s' \
+            "$URL"
+
+          SOURCE="$(find inspection -maxdepth 1 -type f -name 'source.*' ! -name '*.vtt' | head -n 1)"
+          test -n "$SOURCE"
+          ffprobe -v error -print_format json -show_streams -show_format "$SOURCE" > inspection/source-probe.json
+
+          ffmpeg -y -i "$SOURCE" -vf "fps=1/2,scale=360:-2,tile=5x5:padding=8:margin=8" -frames:v 1 inspection/contact-sheet.jpg
+          ffmpeg -y -i "$SOURCE" -vn -ac 1 -ar 16000 -c:a pcm_s16le inspection/source.wav
+
+          python <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+
+          root = Path('inspection')
+          model = WhisperModel('base.en', device='cpu', compute_type='int8')
+          segments, info = model.transcribe(str(root / 'source.wav'), beam_size=5, vad_filter=True)
+          rows = []
+          for seg in segments:
+              text = seg.text.strip()
+              rows.append({'start': round(seg.start, 3), 'end': round(seg.end, 3), 'text': text})
+          (root / 'whisper-segments.json').write_text(json.dumps(rows, indent=2), encoding='utf-8')
+          (root / 'whisper-transcript.txt').write_text('\n'.join(f"{r['start']:07.3f}-{r['end']:07.3f}  {r['text']}" for r in rows) + '\n', encoding='utf-8')
+
+          candidates = []
+          for idx, row in enumerate(rows):
+              normalized = re.sub(r'[^a-z0-9 ]+', ' ', row['text'].lower())
+              if any(term in normalized.split() for term in ('beer', 'took')) or 'beer' in normalized or 'took' in normalized:
+                  candidates.append({'index': idx, **row})
+          (root / 'cutoff-candidates.json').write_text(json.dumps(candidates, indent=2), encoding='utf-8')
+          print('WHISPER LANGUAGE', info.language, info.language_probability)
+          print('--- TRANSCRIPT ---')
+          print((root / 'whisper-transcript.txt').read_text(encoding='utf-8'))
+          print('--- CUTOFF CANDIDATES ---')
+          print(json.dumps(candidates, indent=2))
+          PY
+
+          echo '--- METADATA SUMMARY ---'
+          jq '{id,title,uploader,duration,description,webpage_url}' inspection/metadata.json
+          echo '--- SOURCE PROBE SUMMARY ---'
+          jq '{format: .format | {duration,size,bit_rate}, streams: [.streams[] | {codec_type,codec_name,width,height,duration,sample_rate,channels}]}' inspection/source-probe.json
+
+      - name: Upload inspection package
+        uses: actions/upload-artifact@v4
+        with:
+          name: second-horn-source-inspection
+          path: inspection/
+          retention-days: 3
