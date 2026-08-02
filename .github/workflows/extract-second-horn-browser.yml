@@ -1,0 +1,343 @@
+name: Extract second Horn through browser
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/extract-second-horn-browser.yml
+      - second-horn-browser-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/second-horn-source-inspection
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install browser and media tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm install --no-save playwright@1.61.1
+          npx playwright install --with-deps chromium
+          python -m pip install faster-whisper requests
+
+      - name: Extract signed playback streams
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf browser-extract browser-output
+          mkdir -p browser-extract browser-output
+
+          cat > browser-extract/extract.cjs <<'NODE'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+          const { URL } = require('url');
+
+          const VIDEO_ID = 'xjItqTkLaU4';
+          const out = 'browser-extract';
+          const mediaResponses = [];
+          const consoleLines = [];
+
+          function sanitizeMediaUrl(raw) {
+            try {
+              const url = new URL(raw);
+              url.searchParams.delete('range');
+              return url.toString();
+            } catch {
+              return raw;
+            }
+          }
+
+          (async () => {
+            const browser = await chromium.launch({
+              headless: true,
+              args: [
+                '--autoplay-policy=no-user-gesture-required',
+                '--disable-features=PreloadMediaEngagementData,MediaEngagementBypassAutoplayPolicies',
+              ],
+            });
+            const context = await browser.newContext({
+              viewport: { width: 1280, height: 720 },
+              userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+              locale: 'en-US',
+              extraHTTPHeaders: {
+                'Accept-Language': 'en-US,en;q=0.9',
+                Referer: 'https://www.youtube.com/',
+              },
+            });
+            const page = await context.newPage();
+            page.on('console', message => consoleLines.push(`${message.type()}: ${message.text()}`));
+            page.on('response', async response => {
+              const url = response.url();
+              if (!url.includes('googlevideo.com/videoplayback')) return;
+              const headers = await response.allHeaders().catch(() => ({}));
+              mediaResponses.push({
+                url,
+                cleanUrl: sanitizeMediaUrl(url),
+                status: response.status(),
+                headers,
+                resourceType: response.request().resourceType(),
+                requestHeaders: await response.request().allHeaders().catch(() => ({})),
+              });
+            });
+
+            const embed = `https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&playsinline=1&controls=1&rel=0`;
+            await page.goto(embed, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+            await page.waitForTimeout(4_000);
+
+            const playButton = page.locator('.ytp-large-play-button');
+            if (await playButton.count()) {
+              await playButton.first().click({ force: true }).catch(() => undefined);
+            }
+            await page.keyboard.press('Space').catch(() => undefined);
+            await page.waitForTimeout(12_000);
+
+            const state = await page.evaluate(() => {
+              const video = document.querySelector('video');
+              const playerResponse = globalThis.ytInitialPlayerResponse ?? null;
+              return {
+                title: document.title,
+                bodyText: document.body?.innerText?.slice(0, 4000) ?? '',
+                video: video ? {
+                  currentTime: video.currentTime,
+                  duration: video.duration,
+                  paused: video.paused,
+                  readyState: video.readyState,
+                  width: video.videoWidth,
+                  height: video.videoHeight,
+                  error: video.error ? { code: video.error.code, message: video.error.message } : null,
+                } : null,
+                playerResponse,
+              };
+            }).catch(error => ({ evaluationError: String(error) }));
+
+            await page.screenshot({ path: `${out}/embed-screenshot.png`, fullPage: true });
+            fs.writeFileSync(`${out}/browser-state.json`, JSON.stringify(state, null, 2));
+            fs.writeFileSync(`${out}/media-responses.json`, JSON.stringify(mediaResponses, null, 2));
+            fs.writeFileSync(`${out}/console.txt`, consoleLines.join('\n'));
+            fs.writeFileSync(`${out}/cookies.json`, JSON.stringify(await context.cookies(), null, 2));
+
+            const directFormats = [];
+            const streamingData = state?.playerResponse?.streamingData;
+            for (const format of [...(streamingData?.formats ?? []), ...(streamingData?.adaptiveFormats ?? [])]) {
+              if (format.url) {
+                directFormats.push({
+                  url: format.url,
+                  cleanUrl: sanitizeMediaUrl(format.url),
+                  mimeType: format.mimeType,
+                  qualityLabel: format.qualityLabel,
+                  bitrate: format.bitrate,
+                  audioQuality: format.audioQuality,
+                  width: format.width,
+                  height: format.height,
+                  contentLength: format.contentLength,
+                  itag: format.itag,
+                });
+              }
+            }
+            fs.writeFileSync(`${out}/direct-formats.json`, JSON.stringify(directFormats, null, 2));
+
+            console.log(JSON.stringify({
+              state: { ...state, playerResponse: state?.playerResponse ? '[captured]' : null },
+              mediaResponseCount: mediaResponses.length,
+              directFormatCount: directFormats.length,
+              mediaSummary: mediaResponses.map(item => ({
+                status: item.status,
+                contentType: item.headers['content-type'],
+                contentLength: item.headers['content-length'],
+                url: item.cleanUrl.slice(0, 240),
+              })),
+            }, null, 2));
+
+            await browser.close();
+          })().catch(error => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
+
+          node browser-extract/extract.cjs
+
+          cat > browser-extract/select_streams.py <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from urllib.parse import parse_qs, urlparse
+
+          root = Path('browser-extract')
+          direct = json.loads((root / 'direct-formats.json').read_text())
+          network = json.loads((root / 'media-responses.json').read_text())
+
+          candidates = []
+          for item in direct:
+              mime = item.get('mimeType') or ''
+              candidates.append({**item, 'source': 'player-response', 'mime': mime})
+          for item in network:
+              parsed = parse_qs(urlparse(item.get('cleanUrl') or item['url']).query)
+              mime = (parsed.get('mime') or [item.get('headers', {}).get('content-type', '')])[0]
+              quality = (parsed.get('quality_label') or parsed.get('quality') or [''])[0]
+              bitrate = int((parsed.get('bitrate') or ['0'])[0] or 0)
+              candidates.append({
+                  'url': item.get('cleanUrl') or item['url'],
+                  'source': 'network',
+                  'mime': mime,
+                  'qualityLabel': quality,
+                  'bitrate': bitrate,
+                  'contentLength': item.get('headers', {}).get('content-length'),
+              })
+
+          unique = []
+          seen = set()
+          for item in candidates:
+              url = item.get('url')
+              if not url or url in seen:
+                  continue
+              seen.add(url)
+              unique.append(item)
+
+          def height(item):
+              if item.get('height'):
+                  return int(item['height'])
+              match = re.search(r'(\d{3,4})', str(item.get('qualityLabel') or ''))
+              return int(match.group(1)) if match else 0
+
+          combined = [item for item in unique if str(item.get('mime', '')).startswith('video/') and 'audioQuality' in item]
+          videos = [item for item in unique if str(item.get('mime', '')).startswith('video/')]
+          audios = [item for item in unique if str(item.get('mime', '')).startswith('audio/')]
+
+          def video_score(item):
+              mime = str(item.get('mime', '')).lower()
+              h = height(item)
+              return ('mp4' in mime, h <= 1080, min(h, 1080), int(item.get('bitrate') or 0))
+
+          def audio_score(item):
+              mime = str(item.get('mime', '')).lower()
+              return ('mp4' in mime or 'aac' in mime, int(item.get('bitrate') or 0))
+
+          selection = {'allCandidates': [{k: v for k, v in item.items() if k != 'url'} for item in unique]}
+          if combined:
+              choice = max(combined, key=video_score)
+              selection['combined'] = choice
+              (root / 'combined-url.txt').write_text(choice['url'])
+          elif videos and audios:
+              video = max(videos, key=video_score)
+              audio = max(audios, key=audio_score)
+              selection['video'] = video
+              selection['audio'] = audio
+              (root / 'video-url.txt').write_text(video['url'])
+              (root / 'audio-url.txt').write_text(audio['url'])
+          else:
+              raise SystemExit(f'No usable stream pair: videos={len(videos)} audios={len(audios)} combined={len(combined)}')
+
+          (root / 'stream-selection.json').write_text(json.dumps(selection, indent=2))
+          print(json.dumps({k: ({kk: vv for kk, vv in v.items() if kk != 'url'} if isinstance(v, dict) else v) for k, v in selection.items() if k != 'allCandidates'}, indent=2))
+          PY
+
+          python browser-extract/select_streams.py
+
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36'
+          if [[ -f browser-extract/combined-url.txt ]]; then
+            curl --fail --location --retry 4 --retry-all-errors --max-time 600 \
+              -A "$UA" -e 'https://www.youtube-nocookie.com/' \
+              "$(cat browser-extract/combined-url.txt)" -o browser-extract/source.bin
+            ffmpeg -y -i browser-extract/source.bin -c copy browser-extract/source.mkv
+          else
+            curl --fail --location --retry 4 --retry-all-errors --max-time 600 \
+              -A "$UA" -e 'https://www.youtube-nocookie.com/' \
+              "$(cat browser-extract/video-url.txt)" -o browser-extract/video.bin
+            curl --fail --location --retry 4 --retry-all-errors --max-time 600 \
+              -A "$UA" -e 'https://www.youtube-nocookie.com/' \
+              "$(cat browser-extract/audio-url.txt)" -o browser-extract/audio.bin
+            ffmpeg -y -i browser-extract/video.bin -i browser-extract/audio.bin \
+              -map 0:v:0 -map 1:a:0 -c copy -shortest browser-extract/source.mkv
+          fi
+
+          ffprobe -v error -print_format json -show_streams -show_format browser-extract/source.mkv > browser-extract/source-probe.json
+          ffmpeg -y -i browser-extract/source.mkv -vn -ac 1 -ar 16000 -c:a pcm_s16le browser-extract/source.wav
+
+          python <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+
+          root = Path('browser-extract')
+          model = WhisperModel('base.en', device='cpu', compute_type='int8')
+          segments, info = model.transcribe(str(root / 'source.wav'), beam_size=5, vad_filter=True, word_timestamps=True)
+          rows = []
+          words = []
+          for segment in segments:
+              rows.append({'start': round(segment.start, 3), 'end': round(segment.end, 3), 'text': segment.text.strip()})
+              for word in segment.words or []:
+                  words.append({'start': round(word.start, 3), 'end': round(word.end, 3), 'word': word.word.strip()})
+          (root / 'transcript.json').write_text(json.dumps(rows, indent=2))
+          (root / 'words.json').write_text(json.dumps(words, indent=2))
+          (root / 'transcript.txt').write_text('\n'.join(f"{r['start']:07.3f}-{r['end']:07.3f}  {r['text']}" for r in rows) + '\n')
+
+          target = []
+          for index, row in enumerate(rows):
+              normalized = re.sub(r'[^a-z0-9 ]+', ' ', row['text'].lower())
+              if 'beer' in normalized or 'took' in normalized or 'mug' in normalized:
+                  target.append({'index': index, 'match': row, 'context': rows[max(0,index-1):min(len(rows),index+2)]})
+          (root / 'cutoff-candidates.json').write_text(json.dumps(target, indent=2))
+          print((root / 'transcript.txt').read_text())
+          print('CUTOFF', json.dumps(target, indent=2))
+          PY
+
+          DURATION="$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 browser-extract/source.mkv)"
+          INTERVAL="$(python -c "print(max(float('$DURATION')/25,0.25))")"
+          ffmpeg -y -i browser-extract/source.mkv \
+            -vf "fps=1/${INTERVAL},scale=320:-2,tile=5x5:padding=8:margin=8" \
+            -frames:v 1 browser-extract/contact-sheet.jpg
+
+          cp browser-extract/browser-state.json browser-output/
+          cp browser-extract/media-responses.json browser-output/
+          cp browser-extract/direct-formats.json browser-output/
+          cp browser-extract/stream-selection.json browser-output/
+          cp browser-extract/source-probe.json browser-output/
+          cp browser-extract/transcript.json browser-output/
+          cp browser-extract/words.json browser-output/
+          cp browser-extract/transcript.txt browser-output/
+          cp browser-extract/cutoff-candidates.json browser-output/
+          cp browser-extract/contact-sheet.jpg browser-output/
+          cp browser-extract/embed-screenshot.png browser-output/
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add browser-output
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: record browser-extracted second Horn source'
+            git push origin HEAD:tmp/second-horn-source-inspection
+          fi
+
+      - name: Upload browser extraction
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: second-horn-browser-extraction
+          path: |
+            browser-output/
+            browser-extract/browser-state.json
+            browser-extract/media-responses.json
+            browser-extract/direct-formats.json
+            browser-extract/stream-selection.json
+            browser-extract/source-probe.json
+            browser-extract/transcript.txt
+            browser-extract/cutoff-candidates.json
+            browser-extract/contact-sheet.jpg
+          if-no-files-found: warn
+          retention-days: 3
