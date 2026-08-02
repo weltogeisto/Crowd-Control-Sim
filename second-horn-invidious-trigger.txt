@@ -1,0 +1,2 @@
+Extract https://www.youtube.com/watch?v=xjItqTkLaU4 through an active Invidious local proxy.
+Cut the preview immediately after the line ending with “inside this Took.”
