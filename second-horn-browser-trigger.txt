@@ -1,0 +1,2 @@
+Extract https://www.youtube.com/watch?v=xjItqTkLaU4 through a real Chromium embed session.
+The preview must end immediately after “Is a mug of beer inside this Took.”
