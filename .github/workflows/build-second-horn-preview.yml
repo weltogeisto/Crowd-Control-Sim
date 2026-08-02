@@ -1,0 +1,334 @@
+name: Build second Horn preview
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/build-second-horn-preview.yml
+      - second-horn-preview-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/second-horn-preview-build
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install media and browser toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm install --no-save playwright@1.61.1
+          npx playwright install --with-deps chromium
+          python -m pip install --upgrade pip
+          python -m pip install faster-whisper
+
+      - name: Download the exact Green Dragon mirror
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf second-horn-work published/second-horn
+          mkdir -p second-horn-work published/second-horn
+
+          PAGE_URL='https://clip.cafe/the-lord-of-the-rings-the-fellowship-of-the-ring-2001/lt-i-gt-to-heal-my-heart-and-drown-my-woe-lt-i-gt-lt-i-gt-rain-may-fall-and-wind-may-blow-lt-i-gt/'
+          MEDIA_URL='https://clip.cafe/videos/lt-i-gt-to-heal-my-heart-and-drown-my-woe-lt-i-gt-lt-i-gt-rain-may-fall-and-wind-may-blow-lt-i-gt.mp4'
+          UA='Mozilla/5.0 (Linux; Android 16; Pixel 9) AppleWebKit/537.36 Chrome/138 Mobile Safari/537.36'
+
+          curl --fail --location --retry 5 --retry-all-errors \
+            --connect-timeout 25 --max-time 600 \
+            -A "$UA" -e "$PAGE_URL" \
+            "$MEDIA_URL" -o second-horn-work/source.mp4
+
+          test "$(stat -c%s second-horn-work/source.mp4)" -gt 100000
+          ffprobe -v error -print_format json -show_streams -show_format \
+            second-horn-work/source.mp4 > second-horn-work/source-probe.json
+
+      - name: Find the requested Took-line ending
+        shell: bash
+        run: |
+          set -euo pipefail
+          ffmpeg -y -i second-horn-work/source.mp4 \
+            -vn -ac 1 -ar 16000 -c:a pcm_s16le second-horn-work/source.wav
+
+          python <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+
+          root = Path('second-horn-work')
+          model = WhisperModel('base.en', device='cpu', compute_type='int8')
+          segments, info = model.transcribe(
+              str(root / 'source.wav'),
+              beam_size=5,
+              vad_filter=True,
+              word_timestamps=True,
+          )
+
+          rows = []
+          words = []
+          for segment in segments:
+              rows.append({
+                  'start': round(segment.start, 3),
+                  'end': round(segment.end, 3),
+                  'text': segment.text.strip(),
+              })
+              for word in segment.words or []:
+                  words.append({
+                      'start': round(word.start, 3),
+                      'end': round(word.end, 3),
+                      'word': word.word.strip(),
+                  })
+
+          normalized = [re.sub(r'[^a-z]', '', item['word'].lower()) for item in words]
+          target_index = None
+          for index, token in enumerate(normalized):
+              if token != 'took':
+                  continue
+              context = normalized[max(0, index - 14):index]
+              if 'beer' in context and ('mug' in context or 'brook' in context):
+                  target_index = index
+                  break
+          if target_index is None:
+              for index, token in enumerate(normalized):
+                  if token == 'took':
+                      target_index = index
+                      break
+          if target_index is None:
+              raise SystemExit('The direct mirror did not contain the requested Took ending')
+
+          cutoff = words[target_index]['end'] + 0.32
+          if not 8 <= cutoff <= 40:
+              raise SystemExit(f'Implausible cutoff: {cutoff}')
+
+          target_window = words[max(0, target_index - 14):target_index + 1]
+          result = {
+              'sourceYouTube': 'https://www.youtube.com/watch?v=xjItqTkLaU4',
+              'sourceMirrorPage': 'https://clip.cafe/the-lord-of-the-rings-the-fellowship-of-the-ring-2001/lt-i-gt-to-heal-my-heart-and-drown-my-woe-lt-i-gt-lt-i-gt-rain-may-fall-and-wind-may-blow-lt-i-gt/',
+              'cutoffSeconds': round(cutoff, 3),
+              'cutRule': 'End immediately after Pippin finishes the first Green Dragon drinking-song stanza.',
+              'language': info.language,
+              'languageProbability': info.language_probability,
+              'targetWordWindow': target_window,
+              'segments': rows,
+          }
+          (root / 'transcript.json').write_text(json.dumps(rows, indent=2), encoding='utf-8')
+          (root / 'words.json').write_text(json.dumps(words, indent=2), encoding='utf-8')
+          (root / 'cut.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
+          (root / 'cutoff.txt').write_text(f'{cutoff:.3f}', encoding='utf-8')
+          print(json.dumps({
+              'cutoffSeconds': result['cutoffSeconds'],
+              'language': result['language'],
+              'targetWordCount': len(target_window),
+              'segmentCount': len(rows),
+          }, indent=2))
+          PY
+
+      - name: Render one synchronized H.264 and AAC timeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          CUTOFF="$(cat second-horn-work/cutoff.txt)"
+          FILTER='[0:v]split=2[bg][fg];[bg]scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,boxblur=24:12,eq=brightness=-0.17:saturation=0.84[bg2];[fg]scale=1280:720:force_original_aspect_ratio=decrease[fg2];[bg2][fg2]overlay=(W-w)/2:(H-h)/2,format=yuv420p[v]'
+
+          ffmpeg -y -i second-horn-work/source.mp4 -t "$CUTOFF" \
+            -filter_complex "$FILTER" \
+            -map '[v]' -map '0:a:0' \
+            -r 30 \
+            -c:v libx264 -profile:v high -level:v 4.1 -preset medium -crf 20 \
+            -pix_fmt yuv420p \
+            -c:a aac -b:a 192k -ar 48000 -ac 2 \
+            -af 'loudnorm=I=-16:TP=-1.5:LRA=11' \
+            -movflags +faststart -shortest \
+            published/second-horn/hobbit-drinking-song.mp4
+
+          ffmpeg -y -ss 1 -i published/second-horn/hobbit-drinking-song.mp4 \
+            -frames:v 1 -c:v libwebp -quality 88 \
+            published/second-horn/hobbit-drinking-song-poster.webp
+
+          ffmpeg -y -ss 3 -i published/second-horn/hobbit-drinking-song.mp4 \
+            -frames:v 1 second-horn-work/validation-frame.jpg
+          test "$(stat -c%s second-horn-work/validation-frame.jpg)" -gt 10000
+          ffmpeg -v error -i published/second-horn/hobbit-drinking-song.mp4 -f null -
+          ffprobe -v error -print_format json -show_streams -show_format \
+            published/second-horn/hobbit-drinking-song.mp4 > second-horn-work/final-probe.json
+
+          python <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          out = Path('published/second-horn')
+          work = Path('second-horn-work')
+          probe = json.loads((work / 'final-probe.json').read_text())
+          cut = json.loads((work / 'cut.json').read_text())
+          streams = probe.get('streams') or []
+          videos = [stream for stream in streams if stream.get('codec_type') == 'video']
+          audios = [stream for stream in streams if stream.get('codec_type') == 'audio']
+          if len(videos) != 1 or len(audios) != 1:
+              raise SystemExit(f'Expected one video and one audio stream: {streams}')
+          video_stream = videos[0]
+          audio_stream = audios[0]
+          if video_stream.get('codec_name') != 'h264' or video_stream.get('pix_fmt') != 'yuv420p':
+              raise SystemExit(f'Unexpected video codec: {video_stream}')
+          if audio_stream.get('codec_name') != 'aac':
+              raise SystemExit(f'Unexpected audio codec: {audio_stream}')
+          if video_stream.get('width') != 1280 or video_stream.get('height') != 720:
+              raise SystemExit(f'Unexpected dimensions: {video_stream.get("width")}x{video_stream.get("height")}')
+
+          video_duration = float(video_stream.get('duration') or probe['format']['duration'])
+          audio_duration = float(audio_stream.get('duration') or probe['format']['duration'])
+          if abs(video_duration - audio_duration) > 0.06:
+              raise SystemExit(f'Audio/video durations diverge: {video_duration} vs {audio_duration}')
+
+          video = out / 'hobbit-drinking-song.mp4'
+          poster = out / 'hobbit-drinking-song-poster.webp'
+          manifest = {
+              'sourceYouTube': cut['sourceYouTube'],
+              'sourceMirrorPage': cut['sourceMirrorPage'],
+              'cutoffSeconds': cut['cutoffSeconds'],
+              'cutRule': cut['cutRule'],
+              'playbackContract': {
+                  'video': 'H.264 High 4.1, 1280x720, yuv420p, 30 fps, Faststart',
+                  'audio': 'AAC LC, 48 kHz stereo, embedded in the same MP4',
+                  'singleTimeline': True,
+              },
+              'files': {
+                  video.name: {
+                      'bytes': video.stat().st_size,
+                      'sha256': hashlib.sha256(video.read_bytes()).hexdigest(),
+                  },
+                  poster.name: {
+                      'bytes': poster.stat().st_size,
+                      'sha256': hashlib.sha256(poster.read_bytes()).hexdigest(),
+                  },
+              },
+              'probe': probe,
+          }
+          (out / 'manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
+          print(json.dumps({
+              'duration': probe['format']['duration'],
+              'videoCodec': video_stream['codec_name'],
+              'audioCodec': audio_stream['codec_name'],
+              'dimensions': f"{video_stream['width']}x{video_stream['height']}",
+              'bytes': video.stat().st_size,
+              'sha256': manifest['files'][video.name]['sha256'],
+          }, indent=2))
+          PY
+
+      - name: Build the Horn acceptance page
+        shell: bash
+        run: |
+          cat > published/second-horn/index.html <<'HTML'
+          <!doctype html>
+          <html lang="de">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+            <title>Das Auenland hebt den Krug · Horn Preview</title>
+            <style>
+              *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0b1210;color:#fff;font-family:Georgia,serif}body{min-height:100dvh;background:radial-gradient(circle at 50% 20%,#596849 0,#24362f 43%,#090d0c 82%);display:grid;place-items:center;padding:24px}.launch{width:82px;height:82px;border-radius:999px;border:1px solid #c58a45;background:#f2d39c;font-size:36px;box-shadow:0 18px 52px #0008;cursor:pointer}.label{margin-top:14px;text-align:center;font:700 12px/1.2 Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#f1d7a1}.overlay{position:fixed;inset:0;z-index:10;background:radial-gradient(circle at 50% 25%,#52604b 0,#233631 43%,#070b0a 82%);display:none;align-items:center;justify-content:center;padding:14px;overflow:auto}.overlay.open{display:flex}.card{position:relative;width:min(95vw,760px);border:1px solid #b9954d99;border-radius:32px;background:linear-gradient(155deg,#526048e8,#28261ce8);padding:28px 30px 24px;text-align:center;box-shadow:0 30px 90px #000c}.close{position:absolute;right:12px;top:12px;width:42px;height:42px;border-radius:50%;border:1px solid #ecd9a499;background:#f7edda;color:#4b2b18;font-size:25px;z-index:3}.eyebrow{margin:0;padding:0 48px;font:800 10px/1.25 Arial,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:#f5ca72}h1{margin:8px 0 0;font-size:clamp(28px,5vw,42px);line-height:1.02;color:#fff8d9}.subtitle{margin:8px 0 0;font-size:15px;font-style:italic;color:#f7e8bddf}.frame{position:relative;margin-top:18px;aspect-ratio:16/9;border-radius:21px;overflow:hidden;border:1px solid #d3a85c;background:#000;box-shadow:0 15px 55px #0008}.frame video{display:block;width:100%;height:100%;object-fit:contain;background:#000}.caption{margin:14px auto 0;max-width:640px;font-size:16px;line-height:1.45;color:#fff4cfeb}.retry{display:none;position:absolute;left:20px;right:20px;bottom:18px;border:1px solid #d6a967;border-radius:999px;background:#120b08e8;color:#fff1cc;padding:13px;font:700 14px/1.1 Georgia,serif;letter-spacing:.14em;text-transform:uppercase}.retry.show{display:block}@media(max-width:600px){.card{padding:25px 14px 19px;border-radius:26px}.close{right:7px;top:7px;width:38px;height:38px}.eyebrow{font-size:9px;padding:0 40px}.subtitle{font-size:13px}.frame{margin-top:15px;border-radius:16px}.caption{font-size:14px}}
+            </style>
+          </head>
+          <body>
+            <main><button class="launch" id="launch" aria-label="Horn-Cinematic starten">📯</button><div class="label">Horn erklingen lassen</div></main>
+            <section class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Das Auenland hebt den Krug">
+              <div class="card">
+                <button class="close" id="close" aria-label="Schließen">×</button>
+                <p class="eyebrow">Im Grünen Drachen</p>
+                <h1>Das Auenland hebt den Krug</h1>
+                <p class="subtitle">Merry und Pippin stimmen ein Trinklied an.</p>
+                <div class="frame">
+                  <video id="video" playsinline preload="metadata" poster="hobbit-drinking-song-poster.webp"></video>
+                  <button class="retry" id="retry">Film mit Ton starten</button>
+                </div>
+                <p class="caption">Noch ist die Welt klein: ein Tisch, vier Freunde und ein Abend, an dem das Abenteuer weit entfernt scheint.</p>
+              </div>
+            </section>
+            <script>
+              const launch=document.querySelector('#launch'),overlay=document.querySelector('#overlay'),close=document.querySelector('#close'),video=document.querySelector('#video'),retry=document.querySelector('#retry');let run=0,timer=0;
+              async function play(){retry.classList.remove('show');video.muted=false;video.volume=.88;video.currentTime=0;try{await video.play()}catch{retry.classList.add('show')}clearTimeout(timer);timer=setTimeout(()=>{if(video.paused||video.currentTime<.2)retry.classList.add('show')},1200)}
+              async function start(){run++;overlay.classList.add('open');video.pause();video.removeAttribute('src');video.load();video.src='hobbit-drinking-song.mp4?run='+run;await play()}
+              function stop(){clearTimeout(timer);video.pause();video.currentTime=0;overlay.classList.remove('open');retry.classList.remove('show')}
+              launch.addEventListener('click',start);retry.addEventListener('click',play);close.addEventListener('click',stop);overlay.addEventListener('click',event=>{if(event.target===overlay)stop()});video.addEventListener('playing',()=>retry.classList.remove('show'));video.addEventListener('error',()=>retry.classList.add('show'));
+            </script>
+          </body>
+          </html>
+          HTML
+
+      - name: Verify first and second Android playback
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --directory published/second-horn >/tmp/second-horn-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID' EXIT
+
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          async function check(page,label,previousSrc=null){
+            await page.click('#launch');
+            await page.waitForFunction(()=>{const v=document.querySelector('#video');return v&&!v.paused&&!v.muted&&v.volume>0&&v.currentTime>.45&&v.readyState>=3},{timeout:15000});
+            const start=await page.evaluate(()=>{const v=document.querySelector('#video');return{src:v.currentSrc,time:v.currentTime,width:v.videoWidth,height:v.videoHeight,muted:v.muted,volume:v.volume,error:v.error?.code??null,audios:document.querySelectorAll('audio').length}});
+            if(start.width!==1280||start.height!==720||start.muted||start.volume<=0||start.error!==null||start.audios!==0)throw new Error(`${label}: ${JSON.stringify(start)}`);
+            if(previousSrc&&start.src===previousSrc)throw new Error(`${label}: source did not remount`);
+            await page.waitForTimeout(1300);
+            const end=await page.evaluate(()=>document.querySelector('#video').currentTime);
+            if(end<start.time+.8)throw new Error(`${label}: timeline stalled`);
+            console.log(`${label}: audible single-player ${start.time.toFixed(3)} -> ${end.toFixed(3)}`);
+            return start.src;
+          }
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const context=await browser.newContext({viewport:{width:412,height:915},userAgent:'Mozilla/5.0 (Linux; Android 16; Pixel 9) AppleWebKit/537.36 Chrome/138 Mobile Safari/537.36',isMobile:true,hasTouch:true});
+            const page=await context.newPage();
+            await page.goto('http://127.0.0.1:4173/index.html',{waitUntil:'networkidle'});
+            const first=await check(page,'first start');
+            await page.click('#close');
+            await page.waitForTimeout(250);
+            await check(page,'second start',first);
+            await browser.close();
+          })().catch(error=>{console.error(error);process.exit(1)});
+          NODE
+
+      - name: Commit the validated preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add published/second-horn
+          if git diff --cached --quiet; then
+            echo 'Preview assets are unchanged'
+          else
+            git commit -m 'assets: publish validated second Horn preview'
+            git push origin HEAD:tmp/second-horn-preview-build
+          fi
+
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: second-horn-preview-diagnostics
+          path: |
+            second-horn-work/source-probe.json
+            second-horn-work/transcript.json
+            second-horn-work/words.json
+            second-horn-work/cut.json
+            second-horn-work/final-probe.json
+            second-horn-work/validation-frame.jpg
+          if-no-files-found: warn
+          retention-days: 3

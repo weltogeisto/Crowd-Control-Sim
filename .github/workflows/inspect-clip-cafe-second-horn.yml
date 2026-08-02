@@ -1,0 +1,200 @@
+name: Inspect Clip.Cafe mirror for second Horn
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/inspect-clip-cafe-second-horn.yml
+      - clip-cafe-second-horn-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/second-horn-preview-build
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install browser and media tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm install --no-save playwright@1.61.1
+          npx playwright install --with-deps chromium
+          python -m pip install requests beautifulsoup4 lxml
+
+      - name: Inspect indexed Clip.Cafe candidates
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf clip-cafe-inspection clip-cafe-output
+          mkdir -p clip-cafe-inspection clip-cafe-output
+
+          cat > clip-cafe-inspection/inspect.cjs <<'NODE'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+          const pages = [
+            'https://clip.cafe/the-lord-of-the-rings-the-fellowship-of-the-ring-2001/you-must-leave-and-leave-quickly-where-where-do-i-go/',
+            'https://clip.cafe/?s=mug+of+beer+inside+this+took',
+            'https://clip.cafe/?s=better+than+rain+or+rippling+brook',
+            'https://clip.cafe/?s=hey+ho+to+the+bottle+i+go',
+          ];
+
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const context = await browser.newContext({
+              viewport: { width: 1365, height: 900 },
+              userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36',
+              locale: 'en-US',
+            });
+            const findings = [];
+            for (let index = 0; index < pages.length; index++) {
+              const target = pages[index];
+              const page = await context.newPage();
+              const media = [];
+              page.on('request', request => {
+                const url = request.url();
+                const type = request.resourceType();
+                if (type === 'media' || /\.(?:mp4|webm|m3u8|mpd)(?:\?|$)/i.test(url) || /video|stream|clip/i.test(url)) {
+                  media.push({ url, type, method: request.method(), headers: request.headers() });
+                }
+              });
+              page.on('response', async response => {
+                const headers = await response.allHeaders().catch(() => ({}));
+                const ct = headers['content-type'] || '';
+                if (ct.startsWith('video/') || ct.startsWith('audio/') || ct.includes('mpegurl') || ct.includes('dash+xml')) {
+                  media.push({ url: response.url(), status: response.status(), contentType: ct, headers });
+                }
+              });
+              let loadError = null;
+              try {
+                await page.goto(target, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+                await page.waitForTimeout(5_000);
+                const playButtons = [
+                  page.locator('video'),
+                  page.locator('button[aria-label*="Play" i]'),
+                  page.locator('.play'),
+                  page.locator('[class*="play"]'),
+                ];
+                for (const locator of playButtons) {
+                  if (await locator.count()) {
+                    await locator.first().click({ force: true }).catch(() => undefined);
+                    await page.waitForTimeout(2_000);
+                  }
+                }
+                await page.waitForTimeout(4_000);
+              } catch (error) {
+                loadError = String(error);
+              }
+
+              const state = await page.evaluate(() => {
+                const videos = [...document.querySelectorAll('video')].map(video => ({
+                  src: video.src,
+                  currentSrc: video.currentSrc,
+                  poster: video.poster,
+                  duration: video.duration,
+                  readyState: video.readyState,
+                  paused: video.paused,
+                  sources: [...video.querySelectorAll('source')].map(source => ({ src: source.src, type: source.type })),
+                }));
+                const links = [...document.querySelectorAll('a[href]')]
+                  .map(anchor => anchor.href)
+                  .filter(href => /download|\.mp4|\.webm|m3u8|video/i.test(href));
+                const scripts = [...document.scripts].map(script => script.src || script.textContent || '').filter(Boolean);
+                return {
+                  title: document.title,
+                  href: location.href,
+                  text: document.body?.innerText?.slice(0, 12000) || '',
+                  html: document.documentElement.outerHTML,
+                  videos,
+                  links,
+                  scripts,
+                };
+              }).catch(error => ({ evaluationError: String(error) }));
+
+              fs.writeFileSync(`clip-cafe-inspection/page-${index}.html`, state.html || '');
+              fs.writeFileSync(`clip-cafe-inspection/page-${index}.json`, JSON.stringify({ target, loadError, ...state, html: '[saved separately]', media }, null, 2));
+              await page.screenshot({ path: `clip-cafe-inspection/page-${index}.png`, fullPage: true }).catch(() => undefined);
+              findings.push({ target, loadError, title: state.title, href: state.href, text: state.text, videos: state.videos, links: state.links, media });
+              await page.close();
+            }
+            fs.writeFileSync('clip-cafe-inspection/findings.json', JSON.stringify(findings, null, 2));
+            console.log(JSON.stringify(findings.map(item => ({ target: item.target, loadError: item.loadError, title: item.title, href: item.href, videos: item.videos, links: item.links, media: item.media.map(entry => ({ url: entry.url, type: entry.type, status: entry.status, contentType: entry.contentType })) })), null, 2));
+            await browser.close();
+          })().catch(error => { console.error(error); process.exit(1); });
+          NODE
+
+          node clip-cafe-inspection/inspect.cjs
+
+          python <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from urllib.parse import unquote
+
+          root = Path('clip-cafe-inspection')
+          findings = json.loads((root / 'findings.json').read_text())
+          urls = []
+          patterns = [
+              r'https?[^"\'<> ]+?\.(?:mp4|webm|m3u8|mpd)(?:\?[^"\'<> ]*)?',
+              r'https?:\\/\\/[^"\']+',
+              r'"(?:file|src|video_url|download_url|contentUrl)"\s*:\s*"([^"]+)"',
+          ]
+          for path in root.glob('page-*.html'):
+              text = path.read_text(errors='ignore')
+              for pattern in patterns:
+                  for match in re.findall(pattern, text, flags=re.I):
+                      value = match if isinstance(match, str) else match[0]
+                      value = value.replace('\\/', '/').replace('&amp;', '&')
+                      if value.startswith('http') and value not in urls:
+                          urls.append(value)
+          for item in findings:
+              for video in item.get('videos') or []:
+                  for value in [video.get('src'), video.get('currentSrc'), *(source.get('src') for source in video.get('sources') or [])]:
+                      if value and value not in urls: urls.append(value)
+              for value in item.get('links') or []:
+                  if value and value not in urls: urls.append(value)
+              for media in item.get('media') or []:
+                  value = media.get('url')
+                  if value and value not in urls: urls.append(value)
+          (root / 'candidate-urls.json').write_text(json.dumps(urls, indent=2))
+          print(json.dumps(urls, indent=2))
+          PY
+
+          cp clip-cafe-inspection/findings.json clip-cafe-output/
+          cp clip-cafe-inspection/candidate-urls.json clip-cafe-output/
+          cp clip-cafe-inspection/page-*.json clip-cafe-output/
+          cp clip-cafe-inspection/page-*.png clip-cafe-output/ 2>/dev/null || true
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add clip-cafe-output
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: record Clip.Cafe second Horn inspection'
+            git push origin HEAD:tmp/second-horn-preview-build
+          fi
+
+      - name: Upload inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clip-cafe-second-horn-inspection
+          path: |
+            clip-cafe-output/
+            clip-cafe-inspection/findings.json
+            clip-cafe-inspection/candidate-urls.json
+            clip-cafe-inspection/page-*.html
+          if-no-files-found: warn
+          retention-days: 3
