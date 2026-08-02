@@ -1,0 +1,531 @@
+{
+  "target": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+  "loadError": null,
+  "title": "Clip.Cafe - Movie Clip database with over 5 million quotes from 20,000 movies",
+  "href": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+  "text": "Turn your backyard shed into a glass skyscraper. WalkStreet is a GPS real-estate tycoon — claim the real buildings around you, upgrade them floor by floor, and watch your district transform.\nPLAY WALKSTREET\n×\nClipCafe\nLogin\nBrowse ▼\nDiscord\nGames\nNEW\nUpgrade\nSearch your favourite movie scene\n\nJust type any quote, movie line, or phrase you remember\n\nAdvanced Filters (optional)\nClip.Cafe is a database for movie and TV show quotes.\nWhether you're a film enthusiast, a content creator, or just someone who loves memorable lines from your favorite shows, Clip.Cafe is your go-to resource for quality movie clips\n5 MILLION\nCLIPS\n82 MILLION\nPHRASES\n320 000\nCONTENT CREATORS\n20 000\nMOVIES\nInception\nInterstellar\nThe Dark Knight\nAvatar\nThe Avengers\nDeadpool\nAvengers: Infinity War\nFight Club\nGuardians Of The Galaxy\nPulp Fiction\nHarry Potter And The Sorcerer's Stone\nForrest Gump\nIron Man\nDjango Unchained\nThe Shawshank Redemption\nThe Matrix\nTitanic\nThe Lord Of The Rings: The Fellowship Of...\nShutter Island\nThe Lord Of The Rings: The Return Of The...\nThe Wolf Of Wall Street\nCaptain America: Civil War\nGame Of Thrones\nThe Dark Knight Rises\nIron Man 3\nBlack Panther\nMad Max: Fury Road\nDoctor Strange\nThe Hunger Games\nInglourious Basterds\nSpider Man: Homecoming\nSuicide Squad\nHarry Potter And The Chamber Of Secrets\nThe Lord Of The Rings: The Two Towers\nGuardians Of The Galaxy Vol 2\nCaptain America: The First Avenger\nHarry Potter And The Prisoner Of Azkaban\nIron Man 2\nThor\nJurassic World\nThor: Ragnarok\nBatman Begins\nInside Out\nAvengers: Endgame\nPirates Of The Caribbean: The Curse Of...\nHarry Potter And The Goblet Of Fire\nWonder Woman\nSe7en\nAvengers: Age Of Ultron\nStar Wars: Episode IV A New Hope\nJoker\nUp\nAnt Man\nHarry Potter And The Deathly Hallows:...\nThe Martian\nStar Wars: Episode VII The Force...\nBack To The Future\nLogan\nThe Godfather\nParasite\nFantastic Beasts And Where To Find Them\nHarry Potter And The Order Of The...\nFinding Nemo\nIt\nHarry Potter And The Half Blood Prince\nCaptain America: The Winter Soldier\nHarry Potter And The Deathly Hallows:...\nCoco\nSpider Man\nSpider Man: No Way Home\nThe Hobbit: An Unexpected Journey\nGone Girl\nWALL·E\nJohn Wick\nThe Revenant\nBatman V Superman: Dawn Of Justice\nMonsters, Inc\nToy Story\nThe Lion King\nGladiator\nThe Incredibles\nStranger Things\nArrival\nSpirited Away\nThe Truman Show\nThor: The Dark World\nSplit\nThe Amazing Spider Man\nDeadpool 2\nThe Hunger Games: Catching Fire\nKill Bill: Vol 1\nBohemian Rhapsody\nThe Shining\nThe Imitation Game\nThe Maze Runner\nGet Out\nThe Hangover\nKingsman: The Secret Service\nThe Green Mile\nStar Wars: Episode V The Empire...\n\n  \n\n4.6\nExcellent\n★★★★☆\nEnglish | \nEspañol | \nPortuguês | \nFrançais | \nDeutsch | \nItaliano | \nTürkçe | \n中文 | \n日本語 | \n한국어\nMovie Quote Database with Video Clips | About Us | Privacy Policy | Refund Policy | Terms & Conditions | Sitemap | DMCA | Report a bug | infoclip.cafe | 1337 LLC, Charlestown,Nevis\nAll movie names, images, videos are registered trademarks and/or copyrights of their respective holders | Site is protected by reCAPTCHA. Google Privacy Policy and Terms of Service apply.",
+  "html": "[saved separately]",
+  "videos": [],
+  "links": [],
+  "scripts": [
+    "https://www.googletagmanager.com/gtag/js?id=G-F67NFJ4Z8K",
+    "\n        window.dataLayer = window.dataLayer || [];\n        function gtag(){dataLayer.push(arguments);}\n        gtag('js', new Date());\n\n        gtag('config', 'G-F67NFJ4Z8K');\n        ",
+    "window.I18N = {\"site.name\":\"ClipCafe\",\"site.tagline\":\"Movie Quote Database with Video clips\",\"site.description\":\"Awesome Movie Clip & Quote Database with over 5 million movie clips. It will take you 200+ days to watch them all\",\"find.page_title\":\"Clip Finder — find the exact movie clip by quote | Clip.Cafe\",\"find.meta_description\":\"Type a line of dialogue and instantly play the exact movie clip from that spot. A fast, phrase-anchored clip finder for video editors.\",\"find.heading\":\"Clip Finder\",\"find.subheading\":\"Type a line of dialogue — the exact clip plays from that spot.\",\"find.placeholder\":\"Type an exact line… e.g. \\\"do or do not, there is no try\\\"\",\"find.empty_player\":\"Your matching clip will play here.\",\"find.hint\":\"Type a line of dialogue to find the exact clip.\",\"find.no_results\":\"No clips found for\",\"find.matches\":\"matches\",\"find.prev\":\"Previous match\",\"find.next\":\"Next match\",\"find.results_label\":\"Matching clips\",\"find.movie_matches\":\"Movies named like this\",\"find.view_label\":\"View\",\"find.view_player\":\"Player\",\"find.view_grid\":\"Grid\",\"find.download\":\"Download\",\"find.open_clip\":\"Open clip\",\"find.autoplay\":\"Autoplay\",\"find.autoplay_on\":\"Autoplay is on — clips advance automatically\",\"find.autoplay_off\":\"Autoplay is off — clips stop when finished\",\"find.autoplay_paused\":\"clips played in a row — tap play to keep watching.\",\"nav.login\":\"Login\",\"nav.logout\":\"Logout\",\"nav.my_profile\":\"My Profile\",\"nav.recently_viewed\":\"Recently Viewed\",\"nav.settings\":\"Settings\",\"nav.subscription\":\"Subscription\",\"nav.liked_clips\":\"Liked Clips\",\"nav.favorited_movies\":\"Favorited Movies\",\"nav.browse\":\"Browse\",\"nav.browse.spotlight\":\"Spotlight\",\"nav.browse.spotlight_desc\":\"Curated highlights\",\"nav.browse.genres\":\"Genres\",\"nav.browse.genres_desc\":\"Browse by category\",\"nav.browse.years\":\"Years\",\"nav.browse.years_desc\":\"Browse by year\",\"nav.games\":\"Games\",\"nav.games.guess\":\"Guess The Movie\",\"nav.games.guess_desc\":\"The classic movie quiz\",\"nav.games.party\":\"Party Game\",\"nav.games.party_desc\":\"Multiplayer fun!\",\"nav.games.daily\":\"The Daily Clip\",\"nav.games.daily_desc\":\"New puzzle every day!\",\"nav.upgrade\":\"Upgrade\",\"nav.upgrade_desc\":\"Unlock HD downloads and premium features\",\"nav.pro\":\"PRO\",\"nav.your_subscription\":\"Your subscription\",\"nav.discord\":\"Discord\",\"nav.open_menu\":\"Open Menu\",\"nav.search\":\"Search\",\"nav.close\":\"Close\",\"nav.go_to_homepage\":\"Go to homepage\",\"nav.language\":\"Language\",\"search.placeholder_movie\":\"Movie\",\"search.placeholder_actor\":\"Actor\",\"search.placeholder_character\":\"Character\",\"search.placeholder_director\":\"Director\",\"search.placeholder_writer\":\"Writer\",\"search.scene_description\":\"Scene Description\",\"search.transcript\":\"Transcript\",\"search.all_movies\":\"All Movies\",\"search.year_from\":\"Year (from)\",\"search.year_to\":\"Year (to)\",\"search.length_seconds\":\"Length (seconds)\",\"search.helper_text\":\"Just type any quote, movie line, or phrase you remember\",\"search.advanced_filters\":\"Advanced Filters (optional)\",\"search.no_results\":\"No Results\",\"search.movies_in_genre\":\"movies with quotes, in {genre} genre\",\"search.no_movies_found\":\"No Movies Found\",\"search.no_clips_found\":\"No clips found\",\"search.quotes_with_word\":\"quotes, with {word} in movies\",\"search.did_you_mean\":\"Did you mean?\",\"search.did_you_mean_subtitle\":\"We couldn't find exact matches, but these movies might be what you're looking for:\",\"footer.quote_database\":\"Movie Quote Database with Video Clips\",\"footer.about_us\":\"About Us\",\"footer.privacy_policy\":\"Privacy Policy\",\"footer.refund_policy\":\"Refund Policy\",\"footer.terms\":\"Terms & Conditions\",\"footer.sitemap\":\"Sitemap\",\"footer.dmca\":\"DMCA\",\"footer.report_bug\":\"Report a bug\",\"footer.copyright_notice\":\"All movie names, images, videos are registered trademarks and/or copyrights of their respective holders\",\"footer.recaptcha_notice\":\"Site is protected by reCAPTCHA.\",\"footer.excellent\":\"Excellent\",\"collection.not_found\":\"Collection not found\",\"collection.all_genres\":\"All Genres\",\"collection.newest_first\":\"Newest First\",\"collection.oldest_first\":\"Oldest First\",\"collection.a_to_z\":\"A → Z\",\"collection.z_to_a\":\"Z → A\",\"collection.year_newest\":\"Year (Newest)\",\"collection.year_oldest\":\"Year (Oldest)\",\"collection.shuffle\":\"Shuffle\",\"collection.filters\":\"Filters\",\"collection.select\":\"Select\",\"collection.grid\":\"Grid\",\"collection.list\":\"List\",\"collection.export\":\"Export\",\"collection.share\":\"Share\",\"collection.rename\":\"Rename\",\"collection.privacy\":\"Privacy\",\"collection.delete\":\"Delete\",\"collection.items\":\"items\",\"collection.type_movie\":\"Movie\",\"collection.type_clip\":\"Clip\",\"collection.my_collection\":\"My Collection\",\"collection.public\":\"Public\",\"collection.private\":\"Private\",\"collection.private_notice\":\"This collection is private\",\"collection.no_permission\":\"You do not have permission to view its contents.\",\"collection.search_items\":\"Search items...\",\"collection.search_favorites\":\"Search favorites...\",\"collection.search_likes\":\"Search likes...\",\"collection.add_to_collection\":\"Add to Collection\",\"collection.remove_from_collection\":\"Remove from Collection\",\"collection.cancel\":\"Cancel\",\"collection.no_items_selected\":\"No items selected\",\"collection.login_to_add\":\"Please log in to add to your collections\",\"collection.share_link_copied\":\"Share link copied\",\"collection.all_favorites\":\"All Favorites\",\"collection.all_likes\":\"All Likes\",\"collection.new_collection\":\"New Collection\",\"collection.search_clips\":\"Search clips...\",\"collection.name_required\":\"Collection name is required\",\"collection.type_required\":\"Collection type must be movie or clip\",\"collection.create_failed\":\"Failed to create collection\",\"collection.create_error\":\"Error creating collection\",\"collection.delete_failed\":\"Failed to delete collection\",\"collection.delete_error\":\"Error deleting collection\",\"collection.update_failed\":\"Failed to update collection\",\"collection.update_error\":\"Error updating collection\",\"collection.load_error\":\"Error loading collection\",\"collection.empty_title\":\"This collection is empty\",\"collection.empty_message\":\"Add items from your favorites or likes\",\"collection.add_failed\":\"Failed to add to collection\",\"collection.add_error\":\"Error adding to collection\",\"collection.remove_confirm\":\"Remove this item from the collection?\",\"collection.remove_failed\":\"Failed to remove from collection\",\"collection.remove_error\":\"Error removing from collection\",\"collection.bulk_add_failed\":\"Failed to add items\",\"collection.bulk_add_error\":\"Error adding items\",\"collection.bulk_remove_confirm\":\"Are you sure you want to remove {count} items?\",\"collection.bulk_remove_failed\":\"Failed to remove items\",\"collection.bulk_remove_error\":\"Error removing items\",\"collection.note_failed\":\"Failed to save note\",\"collection.note_error\":\"Error saving note\",\"collection.tag_add_failed\":\"Failed to add tag\",\"collection.tag_add_error\":\"Error adding tag\",\"collection.tag_remove_failed\":\"Failed to remove tag\",\"collection.items_selected\":\"{count} item(s) selected\",\"collection.showing_items\":\"Showing {visible} of {total} items\",\"collection.load_failed\":\"Failed to load collections\",\"collection.rename_unavailable\":\"Rename not available here. Open Collections to edit.\",\"collection.rename_title\":\"Rename collection\",\"collection.privacy_unavailable\":\"Change privacy not available here. Open Collections to edit.\",\"collection.delete_confirm\":\"Delete this collection? This cannot be undone.\",\"collection.delete_unavailable\":\"Delete not available here. Open Collections to manage.\",\"collection.select_to_share\":\"Select a custom collection to share\",\"collection.share_unavailable\":\"Share link unavailable\",\"collection.get_failed\":\"Failed to get collection\",\"collection.copy_failed\":\"Failed to copy link\",\"collection.export_json\":\"Export as JSON\",\"collection.export_csv\":\"Export as CSV\",\"collection.export_md\":\"Export as Markdown\",\"collection.add_note\":\"Add Note\",\"collection.edit_note\":\"Edit Note\",\"collection.note_unavailable\":\"Note editor not available here.\",\"collection.remove_from_favorites\":\"Remove from Favorites\",\"collection.remove_from_likes\":\"Remove from Likes\",\"trial.started\":\"Your 7-day trial has started :)\",\"error.title\":\"Oops! Something went wrong\",\"error.message\":\"The page you're looking for might have been moved, deleted, or doesn't exist.\",\"error.go_home\":\"Go Home\",\"error.go_back\":\"Go Back\",\"error.404.title\":\"Page Not Found\",\"error.404.message\":\"The page you are looking for does not exist.\",\"error.check_new_clips\":\"Check out new movie clips\",\"error.csrf\":\"Invalid CSRF token\",\"error.passwords_mismatch\":\"Passwords do not match\",\"error.loading_collections\":\"Error loading collections\",\"categories.page_title\":\"Movie Quote Categories\",\"categories.title\":\"Categories\",\"movie.season\":\"Season\",\"movie.episode\":\"Episode\",\"movie.all_seasons\":\"All seasons\",\"movie.all_episodes\":\"All episodes\",\"movie.cast\":\"Cast\",\"movie.all_cast\":\"All Cast\",\"movie.also_watch\":\"Also watch\",\"movie.reviews\":\"Reviews\",\"movie.all_reviews\":\"All Reviews\",\"movie.user_score\":\"User Score\",\"movie.no_reviews_yet\":\"No reviews yet\",\"movie.be_first_to_review\":\"Be the first to review this movie!\",\"movie.go_to_movie_page\":\"Go to Movie Page\",\"movie.back_to\":\"Back to\",\"movie.view_all_reviews\":\"View All {count} Reviews\",\"movie.review.one\":\"review\",\"movie.review.other\":\"reviews\",\"movie.rating.overall\":\"Overall\",\"movie.rating.story\":\"Story\",\"movie.rating.aesthetics\":\"Aesthetics\",\"movie.rating.acting\":\"Acting\",\"movie.rating.sound\":\"Sound\",\"movie.not_found\":\"Movie not found\",\"movie.data_unavailable\":\"Movie data unavailable\",\"movie.tab_about\":\"About\",\"movie.tab_cast\":\"Cast\",\"movie.director\":\"Director\",\"movie.writer\":\"Writer\",\"movie.year\":\"Year\",\"movie.genre\":\"Genre\",\"movie.box_office\":\"Box Office\",\"movie.production\":\"Production\",\"movie.awards\":\"Awards\",\"movie.homepage\":\"Homepage\",\"movie.part_of_collection\":\"Part of Collection\",\"movie.you_might_like\":\"You Might Also Like\",\"movie.watch_full\":\"Watch Full Movie\",\"movie.add_to_favorites\":\"Add to Favorites\",\"movie.remove_from_favorites\":\"Remove from Favorites\",\"movie.added_to_favorites\":\"Movie added to <a href=\\\"favs\\\">favourites</a>\",\"movie.removed_from_favorites\":\"Movie removed from favourites\",\"movie.share\":\"Share\",\"movie.be_first_review\":\"Be the first to share your thoughts on this movie\",\"movie.view_all_cast\":\"View All Cast\",\"movie.search_dialogue\":\"Search dialogue or scene...\",\"movie.clear_filters\":\"Clear all filters\",\"movie.reset\":\"Reset\",\"movie.sort_timeline_asc\":\"Timeline Order →\",\"movie.sort_timeline_desc\":\"Timeline Order ←\",\"movie.sort_most_popular\":\"Most Popular\",\"movie.sort_least_popular\":\"Least Popular\",\"movie.sort_longest\":\"Longest First\",\"movie.sort_shortest\":\"Shortest First\",\"movie.bulk_download_page\":\"Bulk Download Page\",\"movie.bulk_download\":\"Bulk Download\",\"movie.your_review\":\"Your review (optional)\",\"movie.write_your_thoughts\":\"Write your thoughts about the movie...\",\"movie.save_rating\":\"Save Rating\",\"movie.login_to_rate\":\"Please <a href=\\\"login\\\">login</a> to rate movies\",\"movie.login_to_rate_short\":\"Login to rate\",\"movie.cast_not_available\":\"Cast information not available.\",\"movie.login_to_favorite\":\"<a href=\\\"login\\\">Log-in</a> to add movie to favourites\",\"movie.explore_clips\":\"Explore <span>{count}</span> Clips\",\"movie.player_prev\":\"Previous clip\",\"movie.player_next\":\"Next clip\",\"movie.player_empty\":\"Pick a clip below — it plays here. Swipe for the next one.\",\"clip.like\":\"Like\",\"clip.give_like\":\"Give Like\",\"clip.comment_placeholder\":\"What do you think?\",\"clip.download\":\"Download\",\"clip.download_clip\":\"Download Clip\",\"clip.watch_full_movie\":\"Watch Full Movie\",\"clip.find_where_to_watch\":\"Find where to watch\",\"clip.full_movie\":\"Full Movie\",\"clip.share\":\"Share\",\"clip.embed\":\"Embed\",\"clip.get_embed_code\":\"Get Embed Code\",\"collection.in_collection\":\"In \\\"{name}\\\"\",\"error.generic\":\"Error\",\"frontpage.search_title\":\"Search your favourite movie scene\",\"frontpage.description\":\"Clip.Cafe is a database for movie and TV show quotes. <br>Whether you're a <b>film enthusiast</b>, a <b>content creator</b>, or just someone who loves memorable lines from your favorite shows, Clip.Cafe is your go-to resource for quality movie clips\",\"frontpage.popular_clips_title\":\"Today's Popular Clips\",\"frontpage.spotlight_title\":\"In the spotlight\",\"frontpage.new_comments\":\"New comments\",\"frontpage.new_scenes\":\"New Scenes\",\"frontpage.popular_clips\":\"Popular clips\",\"frontpage.stats.clips\":\"clips\",\"frontpage.stats.clips_tooltip\":\"That's one more than 4 999 999. Crazy ikr\",\"frontpage.stats.phrases\":\"phrases\",\"frontpage.stats.phrases_tooltip\":\"Probably more\",\"frontpage.stats.creators\":\"content creators\",\"frontpage.stats.creators_tooltip\":\"More than 320 000 accounts in ClipCafe\",\"frontpage.stats.movies\":\"movies\",\"frontpage.stats.movies_tooltip\":\"Movies with at least 1 clip\",\"pagination.page\":\"Page\",\"content.movies_by_year\":\"Movies by Year\",\"content.movie_quotes_by_year\":\"Movie quotes by the Year\",\"content.movies_released_from\":\"All Movies with quotes that were released from year\",\"content.movie_quotes_in_year\":\"Movie Quotes in {year}\",\"content.movie_quotes_from_year\":\"Movie Quotes from {year}\",\"content.movies_with_quotes_in_year\":\"movies with quotes, released in\",\"content.years\":\"Years\",\"content.statistics\":\"Statistics\",\"user.recently_viewed\":\"Recently Viewed\",\"user.watch_history\":\"Your Watch History\",\"user.login_to_view_history\":\"Log in to see your recently viewed clips and movies\",\"user.sign_in_google\":\"Sign in with Google\",\"user.no_clips_viewed\":\"No clips viewed yet. Start browsing!\",\"user.browse_clips\":\"Browse Clips\",\"user.no_movies_viewed\":\"No movies viewed yet.\",\"user.pick_up_where_left\":\"Pick up where you left off\",\"user.recent_clips\":\"Recent Clips\",\"user.recent_movies\":\"Recent Movies\",\"user.page_of\":\"Page {current} of {total}\",\"user.prev\":\"Prev\",\"user.next\":\"Next\",\"user.favorites\":\"Favorites\",\"user.likes\":\"Likes\",\"user.profile\":\"Profile\",\"user.settings\":\"Settings\",\"user.login_required\":\"Authentication required\",\"user.your_favorite_movies\":\"Your Favorite Movies\",\"user.login_to_save_favorites\":\"Log in to save your favorite movies and create custom collections\",\"user.your_liked_clips\":\"Your Liked Clips\",\"user.login_to_save_likes\":\"Log in to save your favorite clips and create custom collections\",\"user.no_liked_clips_yet\":\"No liked clips yet\",\"user.start_liking_clips\":\"Start liking clips to build your collection!\",\"user.free_user\":\"Free User\",\"user.account_settings\":\"Account Settings\",\"user.view_profile\":\"View Profile\",\"user.start_watching\":\"Start watching and reviewing movies!\",\"user.member_since\":\"Member since\",\"user.comments\":\"Comments\",\"user.collections\":\"Collections\",\"user.loading_collection\":\"Loading collection...\",\"user.no_reviews_yet\":\"No reviews yet.\",\"user.no_favorite_movies_yet\":\"No favorite movies yet.\",\"user.no_recent_activity\":\"No recent activity.\",\"user.payment_successful\":\"Payment Successful\",\"user.payment_thank_you\":\"Thank you for your payment! Your transaction has been successfully completed.\",\"user.joined\":\"Joined\",\"user.days_ago\":\"days ago\",\"comments.latest\":\"Latest Comments\",\"comments.anon\":\"Anon\",\"comments.add_comment\":\"Add a comment\",\"auth.login_create_account\":\"Login or Create Account\",\"auth.reset_password\":\"Reset Your Password\",\"auth.set_new_password\":\"Set New Password\",\"auth.invalid_reset_link\":\"Invalid or expired reset link. Please request a new password reset.\",\"auth.social_login_only\":\"This email uses social login only. Please use the Google sign-in button, or click \\\"Forgot password?\\\" to add a password to your account.\",\"auth.google_cancelled\":\"Google login cancelled or failed.\",\"auth.facebook_cancelled\":\"Facebook login cancelled or failed.\",\"auth.login_failed_retry\":\"Login failed. Please try again or contact support.\",\"auth.google_failed\":\"Google login failed. Please try again.\",\"auth.facebook_failed\":\"Facebook login failed. Please try again.\",\"auth.linkedin_failed\":\"LinkedIn login failed. Please try again.\",\"auth.social_login_failed\":\"Couldn't login, try other social or email us\",\"video.play\":\"Play\",\"video.pause\":\"Pause\",\"video.mute\":\"Mute\",\"video.unmute\":\"Unmute\",\"video.enter_fullscreen\":\"Enter fullscreen\",\"video.exit_fullscreen\":\"Exit fullscreen\",\"video.audio_subtitles\":\"Audio / Subtitles\",\"video.current_time\":\"Current time\",\"video.duration\":\"Duration\",\"video.seek\":\"Seek\",\"video.buffered\":\"buffered\",\"video.embed_share_codes\":\"Embed & Share Codes\",\"video.share_this_clip\":\"Share this clip\",\"video.full_transcript\":\"Full Transcript\",\"video.copy_paste_codes\":\"Copy and paste these codes to share this clip\",\"video.bbcode_label\":\"BBCode (for forums)\",\"video.embed_code_label\":\"Embed Code (HTML iframe)\",\"video.direct_link\":\"Direct Link\",\"video.click_to_copy\":\"Click any field to copy to clipboard\",\"payment.thank_you\":\"Thank you :) Payment was successful\",\"payment.successful\":\"Payment was Successful!\",\"payment.something_wrong\":\"Something went wrong\",\"payment.not_received\":\"Payment not received\",\"payment.pro_plans\":\"ClipCafe PRO Plans & Pricing\",\"payment.secure_stripe\":\"Secure payment via Stripe\",\"payment.cancel_anytime\":\"Cancel anytime\",\"payment.try_pro_free\":\"Try PRO for 7 days for free\",\"payment.get_pro_crypto\":\"Get PRO with Crypto\",\"payment.welcome_to_pro\":\"Welcome to PRO!\",\"payment.welcome_message\":\"Welcome to {plan}, {name}!\",\"payment.success_message\":\"Your payment was successful and your premium features are now active.\",\"payment.unlocked\":\"You've unlocked:\",\"payment.what_next\":\"What would you like to do next?\",\"payment.continue_watching\":\"Continue Watching\",\"payment.continue_watching_desc\":\"Pick up where you left off with your recently viewed clips\",\"payment.browse_clips\":\"Browse Clips\",\"payment.browse_clips_desc\":\"Explore our collection of movie clips and quotes\",\"payment.popular_clips\":\"Popular Clips\",\"payment.popular_clips_desc\":\"See what other users are watching and downloading\",\"payment.view_profile\":\"View Profile\",\"payment.view_profile_desc\":\"Check your account, downloads, and collections\",\"upload.page_title\":\"Upload a Movie Clip\",\"utility.offer_completed\":\"Offer completed :)\",\"activity.commented_on\":\"commented on\",\"activity.liked\":\"liked\",\"activity.reviewed\":\"reviewed\",\"activity.favourited\":\"favourited\",\"modal.confirm\":\"Confirm\",\"modal.cancel\":\"Cancel\",\"modal.continue\":\"Continue\",\"modal.login_required\":\"Login Required\",\"modal.login\":\"Log in\",\"modal.enter_text\":\"Enter text...\",\"modal.submit\":\"Submit\",\"modal.write_note\":\"Write a note...\",\"modal.save\":\"Save\",\"modal.success\":\"Success!\",\"modal.error\":\"Error\",\"modal.ok\":\"OK\",\"modal.collection_options\":\"Collection Options\",\"modal.rename_collection\":\"Rename Collection\",\"modal.change_privacy\":\"Change Privacy\",\"modal.delete_collection\":\"Delete Collection\",\"modal.collection_privacy\":\"Collection Privacy\",\"modal.privacy_choose\":\"Choose who can see this collection\",\"modal.privacy_private\":\"Private\",\"modal.privacy_private_desc\":\"Only you can see this collection\",\"modal.privacy_public\":\"Public\",\"modal.privacy_public_desc\":\"Anyone with the link can view and share\",\"modal.add\":\"Add\",\"modal.remove\":\"Remove\",\"modal.create\":\"Create\",\"modal.new_collection\":\"New collection\",\"modal.search_collections\":\"Search collections...\",\"modal.no_collections_yet\":\"You don't have any {type} collections yet.\",\"modal.create_collection\":\"Create {type} Collection\",\"modal.new_collection_name\":\"New {type} collection name\",\"modal.collections\":\"Collections\",\"user.start_favoriting_movies\":\"Start favoriting movies to build your collection!\",\"user.browse_movies\":\"Browse Movies\",\"user.favorite_movies\":\"Favorite Movies\",\"user.recent_activity\":\"Recent Activity\",\"collection.remove_selected\":\"Remove Selected\",\"collection.remove_from_favorites_confirm\":\"Remove this movie from favorites?\",\"collection.removed_from_favorites\":\"Removed from favorites\",\"collection.note_clip\":\"Add a note about this clip\",\"collection.note_movie\":\"Add a note about this movie\",\"collection.remove_from_likes_confirm\":\"Remove this clip from likes?\",\"collection.removed_from_likes\":\"Removed from likes\",\"collection.filtering_by_tag\":\"Filtering by #{tag}\",\"collection.back_to_collections\":\"Back to Collections\",\"activity.liked_clip_from\":\"Liked a clip from\",\"activity.commented_clip_from\":\"Commented on a clip from\",\"settings.login_required\":\"Please log in to access this page\",\"settings.subscription\":\"Subscription\",\"settings.active_subscription_renews\":\"Active subscription (renews {date})\",\"settings.active_subscription_monthly\":\"Active subscription (renews monthly)\",\"settings.manage_subscriptions\":\"Manage Subscriptions\",\"settings.payment_history\":\"Payment History\",\"settings.date\":\"Date\",\"settings.package\":\"Package\",\"settings.price\":\"Price\",\"settings.invoice\":\"Invoice\",\"settings.payment_issue\":\"Payment Issue\",\"settings.payment_failed_message\":\"Your last payment failed. We're retrying, but please update your payment method to avoid losing access.\",\"settings.update_payment_method\":\"Update Payment Method\",\"settings.subscription_status\":\"Subscription Status\",\"settings.current_plan\":\"Current Plan\",\"settings.status\":\"Status\",\"settings.upgrade_for_hd\":\"Upgrade for HD downloads and more features!\",\"settings.patreon_connection\":\"Patreon Connection\",\"settings.patreon_id\":\"Patreon ID\",\"settings.patreon_active\":\"Active Patron\",\"settings.patreon_inactive\":\"Inactive\",\"settings.manage_on_patreon\":\"Manage on Patreon\",\"settings.disconnect_patreon\":\"Disconnect Patreon\",\"settings.disconnect_patreon_confirm\":\"Are you sure you want to disconnect your Patreon account? You will lose PRO access if it was provided through Patreon.\",\"patreon.thanks_title\":\"Thanks for being an awesome Patron!\",\"patreon.your_id\":\"Your Patreon ID\",\"patreon.our_patreon\":\"Our Patreon\",\"patreon.status_not_active\":\"Not active\",\"patreon.get_pro_message\":\"Get PRO by supporting us on Patreon\",\"patreon.subscribe_button\":\"Subscribe on Patreon\",\"settings.preferences\":\"Preferences\",\"settings.playback_controls\":\"Playback Controls\",\"settings.autoplay_video\":\"Autoplay Video\",\"settings.autoplay_tooltip\":\"Automatically play the video when you visit a clip page.\",\"settings.mute_on_hover\":\"Mute on Hover\",\"settings.mute_tooltip\":\"Mute audio when hovering over video thumbnails.\",\"settings.loop_playback\":\"Loop Playback\",\"settings.loop_tooltip\":\"Automatically replay the video when it ends.\",\"settings.preferred_language\":\"Preferred Language\",\"settings.language_description\":\"Sets the default audio and subtitle language for clips (where available).\",\"settings.ui_language\":\"Website Language\",\"settings.ui_language_description\":\"Choose the language for the website interface.\",\"settings.api_keys\":\"API Keys\",\"settings.documentation\":\"Documentation\",\"settings.api_key\":\"API Key\",\"settings.created\":\"Created\",\"settings.requests\":\"Requests\",\"settings.downloads\":\"Downloads\",\"settings.delete_api_key_confirm\":\"Are you sure you want to delete this API Key?\",\"payment.continue_to_clip\":\"Continue to the clip\",\"payment.contact_support\":\"If all of the transactions got confirmed and PRO is still not activated, then contact us through <a href=\\\"https://discord.gg/kyKmte9CPp\\\">Discord</a> or email us: help@clip.cafe\",\"payment.login_required\":\"Login Required\",\"payment.login_to_download\":\"Sign in or create an account to unlock downloads\",\"payment.login_signup\":\"LOGIN / SIGN UP\",\"payment.limit_reached\":\"Daily Download Limit Reached\",\"payment.limit_reached_message\":\"You've used your 3 free downloads today. Get a <strong>Day Pass ($3)</strong> for unlimited downloads, or upgrade to PRO!\",\"payment.unlock_hd\":\"Unlock HD Downloads\",\"payment.unlock_hd_message\":\"You're one step away from downloading unlimited HD clips with advanced editing features\",\"payment.what_you_get\":\"What You Get with PRO\",\"payment.hd_quality\":\"HD Quality\",\"payment.downloads_high_quality\":\"downloads in high quality\",\"payment.convert_to\":\"Convert to\",\"payment.edit_videos\":\"Edit videos\",\"payment.edit_features\":\"Crop, cut, change speed, add subtitles\",\"payment.bulk_download\":\"Bulk download\",\"payment.multiple_clips\":\"multiple clips at once\",\"payment.view_all_plans\":\"VIEW ALL PLANS & PRICING\",\"payment.hd_4k_downloads\":\"HD & 4K Downloads\",\"payment.hd_4k_desc\":\"Download & watch clips in 1080p, and 4K quality (where available)\",\"payment.format_conversion\":\"Format Conversion\",\"payment.format_conversion_desc\":\"Convert to GIF, WEBP, AV1, MP3, WAV, SRT, and VTT formats\",\"payment.bulk_downloads\":\"Bulk Downloads\",\"payment.bulk_downloads_desc\":\"Queue and download multiple clips simultaneously\",\"payment.subscribed_to\":\"You are subscribed to <span style=\\\"color: #ff892e;\\\">{plan}</span>\",\"payment.manage_subscription_desc\":\"Update payment method, download invoices, or cancel anytime securely via Stripe.\",\"payment.monthly\":\"Monthly\",\"payment.yearly\":\"Yearly\",\"payment.save_percent\":\"Save {percent}%\",\"payment.no_questions\":\"no questions asked\",\"payment.immediate_access\":\"All plans include immediate access\",\"auth.welcome_back\":\"Welcome Back\",\"auth.sign_in_continue\":\"Sign in to continue to Clip.Cafe\",\"auth.continue_with_google\":\"Continue with Google\",\"auth.or\":\"or\",\"auth.email_address\":\"Email Address\",\"auth.password\":\"Password\",\"auth.enter_password\":\"Enter your password\",\"auth.password_requirements\":\"Password requirements\",\"auth.req_length\":\"8+ characters\",\"auth.req_uppercase\":\"Uppercase letter\",\"auth.req_lowercase\":\"Lowercase letter\",\"auth.req_number\":\"Number\",\"auth.accept_tos_required\":\"Please accept the Terms of Service\",\"auth.agree_to_tos\":\"I agree to the <a href=\\\"termsandconditions/\\\" target=\\\"_blank\\\">Terms of Service</a> and <a href=\\\"privacypolicy/\\\" target=\\\"_blank\\\">Privacy Policy</a>\",\"auth.sign_in_create\":\"Sign In / Create Account\",\"auth.forgot_password\":\"Forgot your password?\",\"auth.invalid_email\":\"Please enter a valid email address\",\"auth.toggle_password\":\"Toggle password visibility\",\"auth.enter_new_password\":\"Enter your new password\",\"auth.reenter_password\":\"Re-enter your password\",\"auth.new_password\":\"New Password\",\"auth.confirm_password\":\"Confirm Password\",\"auth.password_must_have\":\"Password must have:\",\"game.guess_the_movie\":\"Guess The Movie\",\"game.your_name\":\"Your Name\",\"daily.media_label\":\"Mystery movie clip\",\"daily.play_pause\":\"Play or pause the clip\",\"daily.type_movie\":\"Type a movie title…\",\"daily.skip\":\"Skip\",\"daily.archive\":\"Archive\",\"daily.stats\":\"Statistics\",\"daily.how_to_play\":\"How to play\",\"daily.archive_title\":\"Past Daily Clips\",\"daily.play_today\":\"Play today's clip\",\"daily.you_got_it\":\"You got it!\",\"daily.it_was\":\"It was\",\"daily.lost_title\":\"So close!\",\"daily.share\":\"Share\",\"daily.copied\":\"Copied!\",\"daily.watch_scene\":\"Watch the full scene\",\"daily.try_hard\":\"Try Hard Mode\",\"daily.hard_label\":\"HARD\",\"daily.hard_intro\":\"A different movie, revealed the slow way: the frame sharpens, then the scene plays, and a dossier fills in with a fact every miss. 6 guesses.\",\"daily.back_to_normal\":\"Back\",\"daily.next_clip_in\":\"Next clip in\",\"daily.stats_played\":\"Played\",\"daily.stats_win_pct\":\"Win %\",\"daily.stats_streak\":\"Streak\",\"daily.stats_max_streak\":\"Max streak\",\"daily.stats_distribution\":\"Guess distribution\",\"daily.earlier\":\"earlier\",\"daily.later\":\"later\",\"daily.higher\":\"higher\",\"daily.lower\":\"lower\",\"daily.pct_tail\":\"of players solved it in {n} or fewer\",\"daily.col_rating\":\"Rating\",\"daily.col_box\":\"Box office\",\"daily.col_studio\":\"Studio\",\"daily.col_director\":\"Director\",\"daily.col_cast\":\"Cast\",\"daily.exact\":\"Exact\",\"daily.partial\":\"Partial\",\"daily.no_match\":\"No match\",\"daily.different\":\"Different\",\"daily.none\":\"None\",\"daily.n_shared\":\"{n} shared\",\"daily.new_clue\":\"New clue\",\"daily.with_sound\":\"Full scene, with sound\",\"daily.feed_label\":\"Your guesses and unlocked clues\",\"daily.correct_label\":\"Correct\",\"daily.skipped_label\":\"Skipped\",\"daily.skip_desc\":\"You traded a guess for a clue\",\"daily.no_more_clues\":\"No extra clues in Hard Mode\",\"daily.clue_year_genre\":\"Year & genres\",\"daily.clue_clip\":\"2-second clip\",\"daily.clue_quote\":\"A line from the scene\",\"daily.board_label\":\"What we know so far\",\"daily.board_title\":\"What we know about the film\",\"daily.lbl_year\":\"Release year\",\"daily.lbl_genre\":\"Genres\",\"daily.lbl_rated\":\"Certificate\",\"daily.lbl_runtime\":\"Runtime\",\"daily.lbl_country\":\"Country\",\"daily.lbl_character\":\"Characters\",\"daily.lbl_cast\":\"Cast member\",\"daily.lbl_director\":\"Director\",\"daily.objective\":\"Guess the movie. Every miss unlocks another clip.\",\"daily.guess_n_of_m\":\"Guess {n} of {m}\",\"daily.n_wins\":\"{n} wins\",\"daily.n_played\":\"{n} played\",\"daily.board_pending\":\"The leaderboard switches on once the first puzzles are generated.\",\"daily.board_empty_today\":\"Nobody has finished today's clip yet. Be the first.\",\"daily.board_empty\":\"No ranked players yet.\",\"daily.board_avg_min\":\"Minimum 5 wins to be ranked.\",\"daily.board_error\":\"Could not load the leaderboard.\",\"daily.clue_barcode\":\"The scene’s colour signature\",\"daily.clue_barcode_alt\":\"A strip of colour, one band per moment of the scene\",\"daily.clue_barcode_desc\":\"Every band is one moment of the scene, averaged to a single colour.\",\"daily.clue_scene2\":\"A different scene\",\"daily.clue_scene2_desc\":\"Another moment from the same film — not the one you are guessing.\",\"daily.clue_cast\":\"One cast member\",\"daily.leaderboard\":\"Leaderboard\",\"daily.rank\":\"Rank\",\"daily.avg_guesses\":\"Avg guesses\",\"daily.sign_in\":\"Sign in\",\"daily.signin_pitch\":\"Sign in to save your streak and join the leaderboard.\",\"daily.synced\":\"{n} past games added to your account\",\"daily.streak_milestone\":\"{n}-day streak!\",\"daily.yesterday_was\":\"Yesterday was\",\"daily.yesterday_unplayed\":\"You haven't played yesterday's clip.\",\"daily.play_it\":\"Play it\",\"daily.more_puzzles\":\"Play past clips\",\"daily.lets_play\":\"Let's play\",\"daily.board_today\":\"Today\",\"daily.board_streak\":\"Streaks\",\"daily.board_wins\":\"Wins\",\"daily.board_avg\":\"Best average\",\"daily.mode_normal\":\"Easy\",\"daily.funnel_pitch\":\"Try The Daily Clip — one new movie puzzle every day, with streaks and a leaderboard.\",\"daily.funnel_cta\":\"Play today's clip\",\"daily.offline_retry\":\"Connection problem — try again\",\"daily.new_puzzle\":\"A new clip is ready!\",\"daily.play\":\"Play\",\"daily.help_html\":\"<h2>How to play</h2><p>Guess the movie in <b>7</b> tries.</p><p>You start with a single still from an obscure scene. Every guess or skip unlocks another clip from the same film, and they arrive in order of how well known they are &mdash; so the scene everyone remembers comes last. Swipe or use the arrows to go back to any clip you have already unlocked.</p><p>Every wrong guess also tells you how your film compares with the answer on five things: <b>IMDb rating</b> (higher or lower), <b>box office</b> (bigger or smaller), <b>studio</b>, <b>director</b>, and any <b>cast</b> the two films share.</p><p>A new clip drops every day at midnight UTC. Solved it? Try <b>Hard Mode</b>: a different film, revealed the slow way &mdash; a frame that sharpens, then the scene itself, and a dossier that fills in with one fact per miss. 6 guesses.</p>\",\"upload.search_for_movie\":\"Search for a movie...\",\"aria.search_box\":\"Search box\",\"aria.search_button\":\"Search button\",\"aria.user_menu\":\"User menu\",\"aria.close\":\"Close\",\"aria.close_window\":\"Close window\",\"aria.share\":\"Share\",\"aria.search_in_collection\":\"Search in collection\",\"aria.subtitle_languages\":\"Subtitle Languages\",\"collection.options\":\"Collection options\",\"movie.find_where_to_watch\":\"Find where to watch\",\"movie.find_where_to_watch_full\":\"Find out where to watch this movie\",\"pricing.vat_year\":\"+ VAT / year\",\"pricing.vat_month\":\"+ VAT / month\",\"pricing.equivalent_to\":\"Equivalent to ${price}/mo\",\"pricing.order_now\":\"ORDER NOW\",\"pricing.ready_to_upgrade\":\"Ready to upgrade?\",\"pricing.join_thousands\":\"Join thousands of users enjoying PRO features\",\"pricing.choose_your_plan\":\"Choose Your Plan\",\"faq.title\":\"Frequently Asked Questions\",\"faq.q1\":\"What is ClipCafe PRO?\",\"faq.a1\":\"ClipCafe PRO unlocks advanced features including <span class=\\\"pro-highlight\\\">HD/4K downloads</span>, <span class=\\\"pro-highlight\\\">format conversion</span>, advanced editing tools, and bulk downloads. Choose your plan: <span class=\\\"pro-highlight\\\">PRO</span> for regular use or <span class=\\\"pro-highlight\\\">Creator</span> for unlimited access.\",\"faq.q2\":\"What's the difference between PRO and Creator?\",\"faq.a2_intro\":\"All plans include HD/4K downloads, editing tools, and format conversion. The difference is limits:\",\"faq.a2_pro\":\"<strong>PRO ($5/month):</strong> 100 HD/4K clips per day - great for regular content creators\",\"faq.a2_creator\":\"<strong>Creator ($10/month):</strong> <span class=\\\"pro-highlight\\\">Unlimited</span> HD/4K clips + bulk ZIP downloads + priority support\",\"faq.q3\":\"Do I get immediate access after subscribing?\",\"faq.a3\":\"Yes! Your PRO features activate <span class=\\\"pro-highlight\\\">immediately</span> after payment confirmation. You can start downloading and editing HD/4K clips right away.\",\"faq.q4\":\"How do daily download limits work?\",\"faq.a4\":\"Your download limit resets <span class=\\\"pro-highlight\\\">daily at midnight UTC</span>. For example, if you have PRO ($5/month) and download 50 clips today, you'll have 50 remaining today and a fresh 100 tomorrow. <span class=\\\"pro-highlight\\\">Unused downloads do not roll over</span>.\",\"faq.q5\":\"What happens if I reach my daily limit?\",\"faq.a5\":\"Once you reach your daily limit, you'll need to wait until the next day for your limit to reset, or you can upgrade to a higher tier for more downloads. You can still browse, search, and stream clips without limits.\",\"faq.q6\":\"What quality are the downloads?\",\"faq.a6_intro\":\"PRO members can download clips in multiple quality levels:\",\"faq.a6_4k\":\"<strong><span class=\\\"pro-highlight\\\">4K (2160p)</span>:</strong> Available on select premium videos\",\"faq.a6_1080p\":\"<strong>Full HD (1080p):</strong> Available on most videos\",\"faq.a6_720p\":\"<strong>HD (720p):</strong> Standard HD quality\",\"faq.a6_free\":\"Free users get <span class=\\\"pro-highlight\\\">3 SD downloads per day</span> (426p standard definition). All downloads include <span class=\\\"pro-highlight\\\">high-quality audio</span>.\",\"faq.q7\":\"Can I download multiple clips at once?\",\"faq.a7\":\"Yes! PRO members have access to bulk download features, allowing you to queue and download multiple clips simultaneously. This saves significant time when working on projects.\",\"faq.q8\":\"What formats can I convert clips to?\",\"faq.a8_intro\":\"PRO members can convert clips to multiple formats:\",\"faq.a8_video\":\"<strong>Video:</strong> MP4, WEBP, AV1, GIF\",\"faq.a8_audio\":\"<strong>Audio:</strong> MP3, WAV (extract audio from clips)\",\"faq.a8_subtitles\":\"<strong>Subtitles:</strong> SRT, VTT (download subtitle files separately)\",\"faq.q9\":\"What editing features are included?\",\"faq.a9_intro\":\"PRO members have access to advanced editing tools:\",\"faq.a9_crop\":\"<strong>Crop & Trim:</strong> Cut clips to exact lengths and dimensions\",\"faq.a9_speed\":\"<strong>Speed Control:</strong> Change playback speed (slow motion or fast forward)\",\"faq.a9_subtitles\":\"<strong>Subtitle Embedding:</strong> Add or remove subtitles from clips\",\"faq.a9_quality\":\"<strong>Quality Selection:</strong> Choose your preferred resolution before download\",\"faq.q10\":\"Is the experience really ad-free?\",\"faq.a10\":\"Yes, absolutely! PRO members enjoy a completely ad-free experience across the entire platform. No banner ads, no video ads, no interruptions - just pure content browsing and downloading.\",\"faq.q11\":\"Do clips include subtitles?\",\"faq.a11\":\"Most clips include accurate subtitles/transcripts. You can view them while streaming, embed them in downloads, or download subtitle files separately in SRT or VTT format.\",\"faq.q12\":\"How does billing work?\",\"faq.a12\":\"All PRO subscriptions are billed monthly on a recurring basis. Your card will be charged automatically each month on the same day you initially subscribed. You'll receive an email receipt after each payment.\",\"faq.q13\":\"What payment methods do you accept?\",\"faq.a13\":\"We use <strong><span class=\\\"pro-highlight\\\">Stripe</span></strong> for secure payment processing - the same payment system trusted by companies like <span class=\\\"pro-highlight\\\">Amazon, Google, and Shopify</span>. Stripe accepts all major credit and debit cards (Visa, Mastercard, American Express, Discover), as well as digital wallets like Apple Pay and Google Pay.\",\"faq.a13_badge\":\"Bank-level encryption & PCI-DSS certified\",\"faq.q14\":\"Is my payment information secure?\",\"faq.a14\":\"Absolutely. We use <strong><span class=\\\"pro-highlight\\\">Stripe</span></strong>, a <span class=\\\"pro-highlight\\\">PCI-DSS Level 1 certified</span> payment processor - the highest level of security in the payment industry. Your credit card information is <span class=\\\"pro-highlight\\\">never stored on our servers</span>. All payment data is encrypted and handled directly by Stripe's secure infrastructure, giving you the same level of protection used by major enterprises worldwide.\",\"faq.q15\":\"Is VAT included in the price?\",\"faq.a15\":\"The displayed prices ($5, $10, $50) are base prices. VAT (Value Added Tax) will be added at checkout based on your location as required by local tax laws. The final amount will be shown before you confirm payment.\",\"faq.q16\":\"Can I cancel anytime?\",\"faq.a16\":\"Yes, you can cancel your subscription at <span class=\\\"pro-highlight\\\">any time</span> with <span class=\\\"pro-highlight\\\">no questions asked</span> and <span class=\\\"pro-highlight\\\">no cancellation fees</span>. After canceling, you'll retain PRO access until the end of your current billing period.\",\"faq.q17\":\"How do I manage or cancel my subscription?\",\"faq.a17\":\"You can manage your subscription by clicking the <strong><span class=\\\"pro-highlight\\\">\\\"Manage Subscription\\\"</span></strong> button in your account settings (Settings > Subscription tab). Alternatively, use the secure link provided in your subscription confirmation email to access your Stripe billing portal where you can update payment methods, view invoices, or cancel your subscription.\",\"faq.q18\":\"Can I upgrade my plan?\",\"faq.a18\":\"Yes! You can upgrade from PRO to Creator at any time. The upgrade takes effect <span class=\\\"pro-highlight\\\">immediately</span> and you'll be charged a <span class=\\\"pro-highlight\\\">prorated amount</span> for the remaining days in your billing cycle.\",\"faq.q19\":\"What happens if my payment fails?\",\"faq.a19\":\"If a payment fails, we'll retry the charge and send you an email notification. You'll have a <span class=\\\"pro-highlight\\\">grace period</span> to update your payment method via the \\\"Manage Subscription\\\" link. If payment isn't resolved, your subscription will be canceled, but you can resubscribe at any time.\",\"faq.q20\":\"Do you offer refunds?\",\"faq.a20\":\"We offer refunds on a case-by-case basis <span class=\\\"pro-highlight\\\">within 14 days</span> of purchase if you're not satisfied with the service. Please contact our support team at movie@clip.cafe with your account details and reason for the refund request.\",\"faq.q21\":\"Can I use my subscription on multiple devices?\",\"faq.a21\":\"Yes! Your PRO subscription is tied to your <span class=\\\"pro-highlight\\\">account, not a specific device</span>. You can log in and use all PRO features on <span class=\\\"pro-highlight\\\">any device</span> (desktop, tablet, mobile) as long as you're signed into your account.\",\"faq.q22\":\"Are there any file size limits for downloads?\",\"faq.a22\":\"<span class=\\\"pro-highlight\\\">No file size limits</span> for PRO downloads. Clips can range from a few MB to several hundred MB depending on length and quality (4K files will be larger). Your only limit is the daily download count for your tier.\",\"faq.q23\":\"Can I share downloaded clips?\",\"faq.a23\":\"You can use downloaded clips for personal, educational, or fair use purposes. For commercial use or public distribution, please ensure you have proper rights to the content. PRO subscriptions are for individual use and accounts should not be shared.\",\"faq.q24\":\"What kind of support do I get?\",\"faq.a24\":\"All PRO members receive email support. PRO+ members get priority support with faster response times. PRO++ members receive premium support with the highest priority and dedicated assistance.\",\"faq.q25\":\"How do I contact support?\",\"faq.a25\":\"You can reach our support team at <a href=\\\"mailto:movie@clip.cafe\\\">movie@clip.cafe</a> or join our Discord community at <a href=\\\"https://rebrand.ly/clipcafediscord2\\\" target=\\\"_blank\\\">discord.gg/clipcafe</a> for community support and updates.\",\"faq.q26\":\"Still have questions?\",\"faq.a26\":\"If you have any other questions not covered here, please don't hesitate to contact us at <a href=\\\"mailto:movie@clip.cafe\\\">movie@clip.cafe</a>. We're happy to help you choose the right plan and answer any concerns!\",\"download.preview_not_available\":\"Preview not available\",\"download.can_still_download\":\"You can still configure and download the clip\",\"download.start\":\"Start\",\"download.end\":\"End\",\"download.duration\":\"Duration\",\"download.full_clip\":\"Full Clip\",\"download.format\":\"Format\",\"download.format_mp4\":\"MP4 (Video)\",\"download.format_hevc\":\"MP4 HEVC (Smaller)\",\"download.format_webm\":\"WebM (Small)\",\"download.format_gif\":\"GIF (Animation)\",\"download.format_mp3\":\"MP3 (Audio)\",\"download.format_wav\":\"WAV (Audio)\",\"download.format_srt\":\"SRT (Subtitles)\",\"download.format_vtt\":\"VTT (Subtitles)\",\"download.requires_pro\":\"Requires ClipCafe Pro\",\"download.gif_options\":\"GIF Options\",\"download.gif_loop\":\"Loop\",\"download.gif_loop_forever\":\"Loop Forever\",\"download.gif_colors_max\":\"Max (256)\",\"download.gif_colors_high\":\"High (128)\",\"download.gif_colors_med\":\"Med (64)\",\"download.gif_colors_low\":\"Low (32)\",\"download.gif_style_smooth\":\"Smooth\",\"download.gif_style_retro\":\"Retro\",\"download.gif_style_clean\":\"Clean\",\"download.quality\":\"Quality\",\"download.quality_sd\":\"SD (426p)\",\"download.speed\":\"Speed\",\"download.speed_slow\":\"0.5x (Slow)\",\"download.speed_normal\":\"1x (Normal)\",\"download.speed_fast\":\"2x (Fast)\",\"download.speed_custom\":\"Custom...\",\"download.burn_subtitles\":\"Burn Subtitles\",\"download.burn_into_video\":\"Burn into video\",\"download.subtitle_language\":\"Subtitle Language\",\"download.audio_track\":\"Audio Track\",\"download.language\":\"Language\",\"download.button\":\"Download\",\"download.daily_downloads\":\"Daily downloads:\",\"download.pro_features\":\"PRO Features:\",\"download.upgrade_unlock\":\"Upgrade to unlock all features.\",\"download.shortcuts\":\"Shortcuts\",\"download.keyboard_shortcuts\":\"Keyboard Shortcuts\",\"download.video_playback\":\"Video Playback\",\"download.play_pause\":\"Play/Pause\",\"download.seek\":\"Seek\",\"download.jump_start_end\":\"Jump to start/end\",\"download.reset_clip\":\"Reset clip\",\"download.mute_unmute\":\"Mute/Unmute\",\"download.toggle_subtitles\":\"Toggle subtitles\",\"download.timeline_editing\":\"Timeline Editing\",\"download.set_in_out\":\"Set In/Out points\",\"download.jump_in_out\":\"Jump to In/Out\",\"download.adjust_start\":\"Adjust start\",\"download.adjust_end\":\"Adjust end\",\"download.format_quality\":\"Format & Quality\",\"download.select_quality\":\"Select quality\",\"download.cycle_formats\":\"Cycle formats\",\"download.audio_mode\":\"Audio mode\",\"download.subtitle_mode\":\"Subtitle mode\",\"download.actions\":\"Actions\",\"download.close_dialog\":\"Close dialog\",\"download.show_help\":\"Show this help\",\"report.title\":\"Report Issue\",\"report.subtitle\":\"Found something wrong with this clip?\",\"report.description\":\"Help us maintain quality content. Report issues such as:\",\"report.issue_subtitles\":\"Incorrect or missing subtitles\",\"report.issue_info\":\"Wrong movie or scene information\",\"report.issue_quality\":\"Video quality issues\",\"report.issue_inappropriate\":\"Inappropriate content\",\"report.issue_copyright\":\"Copyright violations\",\"report.submit\":\"Report to Moderators\",\"package.feature_100_clips\":\"100 HD/4K clips per day\",\"package.feature_unlimited_clips\":\"<strong>Unlimited</strong> HD/4K clips\",\"package.feature_editing\":\"All editing features\",\"package.feature_conversion\":\"Format conversion\",\"package.feature_bulk\":\"Bulk downloads\",\"package.feature_bulk_zip\":\"Bulk ZIP downloads\",\"package.feature_email_support\":\"Email support\",\"package.feature_priority_support\":\"Priority support\",\"package.cta_start_pro\":\"START WITH PRO\",\"package.cta_get_creator\":\"GET CREATOR\",\"package.badge_best_value\":\"BEST VALUE\",\"clip.tab_quote\":\"Quote\",\"clip.tab_about\":\"About\",\"clip.tab_related\":\"Related\",\"clip.duration\":\"Duration\",\"clip.duration_seconds\":\"{duration} seconds\",\"clip.views\":\"Views\",\"clip.timestamp_in_movie\":\"Timestamp in Movie\",\"clip.uploaded\":\"Uploaded\",\"clip.season\":\"Season\",\"clip.episode\":\"Episode\",\"clip.genres\":\"Genres\",\"clip.production\":\"Production\",\"clip.want_hd\":\"Want This Clip in HD?\",\"clip.upgrade_hd_access\":\"Upgrade for HD/4K downloads and unlimited access.\",\"clip.upgrade_now\":\"Upgrade now →\",\"clip.movie_summary\":\"Movie Summary\",\"clip.actors\":\"Actors\",\"clip.available_in_languages\":\"Available in <strong>{count} languages</strong>\",\"clip.watch_hd_get_pro\":\"To watch in HD, get\",\"comments.add_comment_placeholder\":\"Add a comment...\",\"comments.submit\":\"Comment\",\"comments.join_conversation\":\"Join the conversation\",\"comments.login_to_comment\":\"Log in or create an account to leave a comment\",\"comments.login\":\"Log In\",\"comments.login_to_collections\":\"Please <a href=\\\"login/\\\" class=\\\"whiteLink\\\">log in</a> to add to collections.\",\"report.submitted\":\"Report Submitted\",\"report.thank_you_message\":\"Thank you for helping us maintain quality content. Our moderation team will review your report shortly.\",\"report.return_home\":\"Return to Home\",\"error.review_spam\":\"Review contains spam content\",\"error.rating_saved\":\"Rating saved successfully\",\"error.database_error\":\"Database error\",\"error.too_many_requests\":\"Too many requests\",\"error.trial_used\":\"You already used your trial. <a href=\\\"/order\\\">Get PRO</a>\",\"upload.missing_fields\":\"Missing required fields\",\"upload.upload_failed\":\"Failed to upload file\",\"upload.upload_success\":\"Clip uploaded successfully\",\"upload.file_too_large\":\"File size exceeds maximum limit of 100MB\",\"payment.banner_issue\":\"Payment Issue:\",\"payment.banner_message\":\"Your last payment failed. Your subscription is still active while we retry.\",\"user.anonymous\":\"Anonymous\",\"auth.no_account_found\":\"No account found with that email address\",\"auth.too_many_resets\":\"Too many reset requests. Please try again later.\",\"auth.database_error\":\"Database error occurred\",\"auth.email_sent_set_password\":\"We've sent you an email to set your password\",\"auth.email_sent_reset\":\"Password reset email sent successfully\",\"auth.email_send_failed\":\"Failed to send email\",\"auth.invalid_or_expired_token\":\"Invalid or expired reset token\",\"auth.password_too_short\":\"Password must be at least 8 characters long\",\"auth.password_updated\":\"Password updated successfully\",\"auth.password_update_failed\":\"Failed to update password\",\"collection.untitled\":\"Collection\",\"search.placeholder\":\"Search a quote or a movie\",\"nav.new_badge\":\"NEW\",\"nav.search_tooltip\":\"Search for Movie quote\",\"player.audio\":\"Audio\",\"player.subtitles\":\"Subtitles\",\"player.subtitles_off\":\"Off\",\"player.preferred_lang_set\":\"Preferred language set to {lang}\",\"player.audio_label\":\"Audio: {lang}\",\"download.preparing\":\"Preparing download...\",\"download.download_started\":\"Download started!\",\"download.processing_video\":\"Processing video...\",\"download.processing_video_time\":\"Processing video... {seconds}s\",\"download.starting_download\":\"Starting download...\",\"download.downloading_progress\":\"Downloading {size} MB ({percent}%)\",\"download.downloading_size\":\"Downloading {size} MB...\",\"download.download_complete\":\"Download complete!\",\"download.error_retry\":\"Error - Click to retry\",\"limit.title\":\"Daily Download Limit Reached\",\"limit.reached\":\"You have reached your daily download limit of {limit} downloads.\",\"limit.current_today\":\"Current downloads today:\",\"limit.reset_in\":\"Your limit will reset in:\",\"limit.calculating\":\"Calculating...\",\"limit.upgrade_prompt\":\"Upgrade for higher daily limits:\",\"limit.pro_100\":\"PRO: 100 downloads per day\",\"limit.pro_200\":\"PRO+: 200 downloads per day\",\"limit.pro_1000\":\"PRO++: 1000 downloads per day\",\"limit.upgrade_now\":\"Upgrade Now\",\"limit.refresh\":\"Refresh Limits\",\"limit.refreshing\":\"Refreshing...\",\"limit.refreshed\":\"Limits Refreshed!\",\"limit.downloads_available\":\"Great! You now have {count} downloads available. You can close this dialog and continue downloading.\",\"limit.still_at_limit\":\"Limits refreshed, but you are still at your daily limit. Your subscription may need time to process.\",\"limit.refresh_failed\":\"Failed to refresh limits. Please try again.\",\"limit.reset_now\":\"Now! You can try downloading again.\",\"bulk.already_in_progress\":\"Bulk download already in progress. Please wait for it to complete or cancel it first.\",\"bulk.confirm_page\":\"This will download all clips on this page from \\\"{movie}\\\"{details}.\",\"bulk.confirm_all\":\"This will download all {count} clips from \\\"{movie}\\\" one by one.\",\"bulk.each_counts\":\"Each clip counts towards your daily download limit.\",\"bulk.pause_resume_cancel\":\"You can pause/resume or cancel at any time.\",\"bulk.continue_confirm\":\"Continue with bulk download?\",\"bulk.title\":\"Bulk Download in Progress\",\"bulk.downloading_from\":\"Downloading clips from \\\"{movie}\\\"\",\"bulk.loading_list\":\"Loading clip list... ({current} / {total})\",\"bulk.stats\":\"Downloaded: {downloaded} | Failed: {failed} | Remaining: {remaining}\",\"bulk.pause\":\"Pause\",\"bulk.resume\":\"Resume\",\"bulk.cancel\":\"Cancel\",\"bulk.background_note\":\"Downloads continue in background. Keep tab open for best results.\",\"bulk.status_paused\":\"Paused\",\"bulk.status_rate_limit\":\"Rate limit reached\",\"bulk.status_downloading\":\"Downloading\",\"bulk.partial_warning\":\"You can only download {count} more clips today.\",\"bulk.partial_confirm\":\"Continue with partial download?\",\"bulk.error_starting\":\"Error starting bulk download: {error}\",\"bulk.button_text\":\"Bulk Download\",\"bulk.loading\":\"Loading...\",\"bulk.resuming\":\"Resuming...\",\"pro.required_title\":\"PRO Subscription Required\",\"pro.bulk_premium\":\"Bulk download is a premium feature available to PRO subscribers only.\",\"pro.benefits_title\":\"PRO Benefits:\",\"pro.benefit_pro\":\"PRO: 100 downloads per day + Bulk download\",\"pro.benefit_pro_plus\":\"PRO+: 200 downloads per day + Bulk download\",\"pro.benefit_pro_max\":\"PRO++: 1000 downloads per day + Bulk download\",\"pro.benefit_hd\":\"HD Quality downloads\",\"pro.benefit_no_ads\":\"No advertisements\",\"pro.get_pro\":\"Get PRO\",\"common.close\":\"Close\",\"movie.rating_submitted\":\"Rating Submitted!\",\"movie.thank_you_rating\":\"Thank you for rating this movie\",\"movie.your_review_label\":\"Your Review:\",\"clip.screenshot\":\"Screenshot\",\"download.audio_muted\":\"Audio muted\",\"download.audio_unmuted\":\"Audio unmuted\",\"video.formats_require_pro\":\"Some formats require PRO\",\"video.speed_requires_pro\":\"Speed options require PRO\",\"bulk.all_completed\":\"All downloads completed!\",\"bulk.complete_title\":\"Bulk Download Complete!\",\"bulk.successfully_downloaded\":\"Successfully downloaded:\",\"bulk.failed_downloads\":\"Failed downloads:\",\"bulk.close_dialog\":\"You can close this dialog now.\",\"apikeys.login_required\":\"Log in to see your API-Keys\",\"apikeys.need_paid\":\"To use our API you need a paid account\",\"apikeys.upgrade\":\"Upgrade\",\"apikeys.title\":\"Your API-Keys\",\"apikeys.generate\":\"Generate new key\",\"apikeys.documentation\":\"Documentation\",\"apikeys.col_key\":\"API-Key\",\"apikeys.col_date\":\"Date created\",\"apikeys.col_tier\":\"Tier\",\"apikeys.col_requests\":\"Requests\",\"apikeys.col_downloads\":\"Downloads\",\"apikeys.col_delete\":\"Delete\",\"apikeys.confirm_generate\":\"Generate a new API key?\",\"apikeys.confirm_delete\":\"Are you sure you want to delete this API key? This action cannot be undone.\",\"collection.login_to_search\":\"+ Login to search in your collections\",\"collection.create_collection\":\"+ Create movie collection\",\"collection.create_to_search\":\"+ Create movie collection to search within\",\"collection.movies_count\":\"{count} movies\",\"movie.unknown_movie\":\"Unknown Movie\",\"comment.login_required\":\"Please log in to comment.\",\"comment.clip_not_found\":\"Clip not found.\",\"comment.rate_limited\":\"Too many comment attempts. Please wait before posting again.\",\"comment.spam_blocked\":\"Comment contains spam content and was blocked.\",\"comment.too_short\":\"Comment is too short (minimum 4 characters).\",\"comment.fields_required\":\"Comment and clip ID are required.\",\"video.pro_required_hd\":\"Need PRO account for HD quality\",\"video.pro_feature_required\":\"PRO Feature Required\",\"video.pro_subtitle_burn\":\"Burning non-English subtitles into video requires a PRO subscription.\",\"video.pro_subtitle_download\":\"Downloading subtitles in languages other than English requires a PRO subscription.\",\"video.upgrade_to_pro\":\"Upgrade to PRO\",\"video.go_back\":\"Go Back\",\"video.file_not_found\":\"Video File Not Found\",\"video.file_unavailable\":\"The video file is temporarily unavailable. This issue has been logged.\",\"lang_detect.title\":\"Language Detected\",\"lang_detect.message\":\"We noticed your browser is set to {language}. The site has been switched to match your preference.\",\"lang_detect.continue\":\"Continue in {language}\",\"lang_detect.switch_english\":\"Switch to English\",\"daily.board_next\":\"Next miss reveals\",\"daily.lbl_quote\":\"A line from the scene\",\"daily.about\":\"About the same\",\"daily.clue_scene3_desc\":\"The most-watched scene from this film.\",\"daily.frame_alt\":\"A heavily pixelated frame from the mystery movie clip\",\"daily.seo_desc_today\":\"Guess the movie from one clip. A pixelated frame sharpens, the scene starts playing, and every miss reveals the year, the genres, a quote and the cast. Six guesses, a new clip every day, free to play.\",\"daily.seo_desc_dated\":\"Play The Daily Clip #{no} from {date}. Guess the movie in 6 tries from a pixelated frame, a 2-second scene, a quote and the cast. Free, no sign-up.\",\"daily.seo_desc_dated_stats\":\"The Daily Clip #{no} from {date}: {players} players took it on, {pct}% solved it, and the winners needed {avg} guesses on average. Play it yourself in 6 tries.\",\"daily.seo_desc_archive\":\"Every past Daily Clip puzzle — {n} movie clips to guess, one per day. Pick any date and play it in full, free and with no sign-up.\",\"daily.seo_desc_leaderboard\":\"The Daily Clip leaderboard — longest streaks, most wins, best average and today's fastest solvers in the daily movie guessing game.\",\"daily.seo_stats_line\":\"{players} players have tried this one. {pct}% got it, in {avg} guesses on average.\",\"daily.archive_intro\":\"Every Daily Clip published so far — {n} puzzles. Each one plays exactly like today's: six guesses, and every miss reveals a little more of the film.\",\"daily.about_h2\":\"About The Daily Clip\",\"daily.about_p1\":\"One movie scene, six guesses, a new puzzle every day at midnight UTC. The clip is drawn from the Clip.Cafe library of film scenes, so the answer is always a real film with a real scene behind it — and when you finish you can watch that scene in full.\",\"daily.about_p2\":\"Come back tomorrow to build a streak, or dig into the archive and play every puzzle you have missed. Sign in and your streak, wins and average follow you across devices and onto the leaderboard.\",\"daily.reel_label\":\"Clips unlocked so far\",\"daily.reel_slide\":\"Clip {n} of {m}\",\"daily.reel_prev\":\"Previous clip\",\"daily.reel_next\":\"Next clip\"};window.CURRENT_LANG = \"en\";window.LANG_AUTO_DETECTED=false;window.I18N_LANGUAGES={\"en\":{\"name\":\"English\",\"nativeName\":\"English\",\"flag\":\"gb\",\"dir\":\"ltr\"},\"es\":{\"name\":\"Spanish\",\"nativeName\":\"Español\",\"flag\":\"es\",\"dir\":\"ltr\"},\"pt\":{\"name\":\"Portuguese\",\"nativeName\":\"Português\",\"flag\":\"br\",\"dir\":\"ltr\"},\"fr\":{\"name\":\"French\",\"nativeName\":\"Français\",\"flag\":\"fr\",\"dir\":\"ltr\"},\"de\":{\"name\":\"German\",\"nativeName\":\"Deutsch\",\"flag\":\"de\",\"dir\":\"ltr\"},\"it\":{\"name\":\"Italian\",\"nativeName\":\"Italiano\",\"flag\":\"it\",\"dir\":\"ltr\"},\"tr\":{\"name\":\"Turkish\",\"nativeName\":\"Türkçe\",\"flag\":\"tr\",\"dir\":\"ltr\"},\"zh\":{\"name\":\"Chinese\",\"nativeName\":\"中文\",\"flag\":\"cn\",\"dir\":\"ltr\"},\"ja\":{\"name\":\"Japanese\",\"nativeName\":\"日本語\",\"flag\":\"jp\",\"dir\":\"ltr\"},\"ko\":{\"name\":\"Korean\",\"nativeName\":\"한국어\",\"flag\":\"kr\",\"dir\":\"ltr\"}};(function(){try{var ls=localStorage.getItem(\"preferred_lang\");if(!ls||ls===CURRENT_LANG){if(CURRENT_LANG)localStorage.setItem(\"preferred_lang\",CURRENT_LANG);return}if(/[?&]lang=/.test(location.search)){localStorage.setItem(\"preferred_lang\",CURRENT_LANG);return}if(sessionStorage.getItem(\"_lr\"))return;sessionStorage.setItem(\"_lr\",\"1\");document.cookie=\"preferred_lang=\"+ls+\";path=/;max-age=31536000;SameSite=Lax\"+(location.protocol===\"https:\"?\";Secure\":\"\");location.reload()}catch(e){}})();",
+    "https://clip.cafe/js/i18n.js?i=1770154920",
+    "https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js",
+    "window.LANG_CONFIG = {\"labels\":{\"en\":\"English\",\"fr\":\"French\",\"es\":\"Spanish\",\"de\":\"German\",\"it\":\"Italian\",\"pt\":\"Portuguese\",\"nl\":\"Dutch\",\"pl\":\"Polish\",\"ro\":\"Romanian\",\"hu\":\"Hungarian\",\"bg\":\"Bulgarian\",\"cs\":\"Czech\",\"sk\":\"Slovak\",\"sl\":\"Slovenian\",\"hr\":\"Croatian\",\"sr\":\"Serbian\",\"bs\":\"Bosnian\",\"mk\":\"Macedonian\",\"sq\":\"Albanian\",\"el\":\"Greek\",\"tr\":\"Turkish\",\"uk\":\"Ukrainian\",\"ru\":\"Russian\",\"be\":\"Belarusian\",\"sv\":\"Swedish\",\"da\":\"Danish\",\"no\":\"Norwegian\",\"fi\":\"Finnish\",\"is\":\"Icelandic\",\"ja\":\"Japanese\",\"ko\":\"Korean\",\"zh\":\"Chinese\",\"th\":\"Thai\",\"vi\":\"Vietnamese\",\"id\":\"Indonesian\",\"ms\":\"Malay\",\"tl\":\"Filipino\",\"my\":\"Burmese\",\"km\":\"Khmer\",\"lo\":\"Lao\",\"hi\":\"Hindi\",\"ta\":\"Tamil\",\"te\":\"Telugu\",\"bn\":\"Bengali\",\"mr\":\"Marathi\",\"gu\":\"Gujarati\",\"kn\":\"Kannada\",\"ml\":\"Malayalam\",\"pa\":\"Punjabi\",\"or\":\"Odia\",\"as\":\"Assamese\",\"ur\":\"Urdu\",\"ne\":\"Nepali\",\"si\":\"Sinhala\",\"ar\":\"Arabic\",\"fa\":\"Persian\",\"he\":\"Hebrew\",\"ku\":\"Kurdish\",\"sw\":\"Swahili\",\"af\":\"Afrikaans\",\"am\":\"Amharic\",\"zu\":\"Zulu\",\"ca\":\"Catalan\",\"eu\":\"Basque\",\"gl\":\"Galician\",\"cy\":\"Welsh\",\"ga\":\"Irish\",\"gd\":\"Scottish Gaelic\",\"et\":\"Estonian\",\"lv\":\"Latvian\",\"lt\":\"Lithuanian\",\"ka\":\"Georgian\",\"hy\":\"Armenian\",\"az\":\"Azerbaijani\",\"kk\":\"Kazakh\",\"uz\":\"Uzbek\",\"tg\":\"Tajik\",\"mn\":\"Mongolian\"},\"aliases\":{\"eng\":\"en\",\"enu\":\"en\",\"fra\":\"fr\",\"fre\":\"fr\",\"spa\":\"es\",\"spn\":\"es\",\"esp\":\"es\",\"deu\":\"de\",\"ger\":\"de\",\"ita\":\"it\",\"por\":\"pt\",\"pob\":\"pt\",\"ptu\":\"pt\",\"rus\":\"ru\",\"jpn\":\"ja\",\"jap\":\"ja\",\"kor\":\"ko\",\"zho\":\"zh\",\"chi\":\"zh\",\"cmn\":\"zh\",\"yue\":\"zh\",\"ara\":\"ar\",\"hin\":\"hi\",\"nld\":\"nl\",\"dut\":\"nl\",\"pol\":\"pl\",\"tur\":\"tr\",\"swe\":\"sv\",\"dan\":\"da\",\"nor\":\"no\",\"fin\":\"fi\",\"ces\":\"cs\",\"cze\":\"cs\",\"ell\":\"el\",\"gre\":\"el\",\"heb\":\"he\",\"tha\":\"th\",\"vie\":\"vi\",\"ind\":\"id\",\"msa\":\"ms\",\"may\":\"ms\",\"ukr\":\"uk\",\"ron\":\"ro\",\"rum\":\"ro\",\"hun\":\"hu\",\"bul\":\"bg\",\"srp\":\"sr\",\"hrv\":\"hr\",\"bos\":\"bs\",\"slv\":\"sl\",\"slk\":\"sk\",\"fil\":\"tl\",\"tgl\":\"tl\",\"lao\":\"lo\",\"tam\":\"ta\",\"tel\":\"te\",\"mar\":\"mr\",\"ben\":\"bn\",\"nep\":\"ne\",\"sin\":\"si\",\"fas\":\"fa\",\"per\":\"fa\",\"cat\":\"ca\",\"glg\":\"gl\",\"eus\":\"eu\",\"baq\":\"eu\",\"cym\":\"cy\",\"gle\":\"ga\",\"gla\":\"gd\",\"mkd\":\"mk\",\"mac\":\"mk\",\"sqi\":\"sq\",\"alb\":\"sq\",\"bel\":\"be\",\"isl\":\"is\",\"ice\":\"is\",\"mya\":\"my\",\"bur\":\"my\",\"khm\":\"km\",\"guj\":\"gu\",\"kan\":\"kn\",\"mal\":\"ml\",\"pan\":\"pa\",\"ori\":\"or\",\"asm\":\"as\",\"urd\":\"ur\",\"kur\":\"ku\",\"swa\":\"sw\",\"afr\":\"af\",\"amh\":\"am\",\"zul\":\"zu\",\"est\":\"et\",\"lav\":\"lv\",\"lit\":\"lt\",\"kat\":\"ka\",\"geo\":\"ka\",\"hye\":\"hy\",\"arm\":\"hy\",\"aze\":\"az\",\"kaz\":\"kk\",\"uzb\":\"uz\",\"tgk\":\"tg\",\"mon\":\"mn\"},\"flags\":{\"en\":\"gb\",\"fr\":\"fr\",\"es\":\"es\",\"de\":\"de\",\"it\":\"it\",\"pt\":\"pt\",\"nl\":\"nl\",\"pl\":\"pl\",\"ro\":\"ro\",\"hu\":\"hu\",\"bg\":\"bg\",\"cs\":\"cz\",\"sk\":\"sk\",\"sl\":\"si\",\"hr\":\"hr\",\"sr\":\"rs\",\"bs\":\"ba\",\"mk\":\"mk\",\"sq\":\"al\",\"el\":\"gr\",\"tr\":\"tr\",\"uk\":\"ua\",\"ru\":\"ru\",\"be\":\"by\",\"sv\":\"se\",\"da\":\"dk\",\"no\":\"no\",\"fi\":\"fi\",\"is\":\"is\",\"ja\":\"jp\",\"ko\":\"kr\",\"zh\":\"cn\",\"th\":\"th\",\"vi\":\"vn\",\"id\":\"id\",\"ms\":\"my\",\"tl\":\"ph\",\"my\":\"mm\",\"km\":\"kh\",\"lo\":\"la\",\"hi\":\"in\",\"ta\":\"in\",\"te\":\"in\",\"bn\":\"in\",\"mr\":\"in\",\"gu\":\"in\",\"kn\":\"in\",\"ml\":\"in\",\"pa\":\"in\",\"or\":\"in\",\"as\":\"in\",\"ur\":\"pk\",\"ne\":\"np\",\"si\":\"lk\",\"ar\":\"sa\",\"fa\":\"ir\",\"he\":\"il\",\"ku\":\"iq\",\"sw\":\"ke\",\"af\":\"za\",\"am\":\"et\",\"zu\":\"za\",\"ca\":\"es\",\"eu\":\"es\",\"gl\":\"es\",\"cy\":\"gb\",\"ga\":\"ie\",\"gd\":\"gb\",\"et\":\"ee\",\"lv\":\"lv\",\"lt\":\"lt\",\"ka\":\"ge\",\"hy\":\"am\",\"az\":\"az\",\"kk\":\"kz\",\"uz\":\"uz\",\"tg\":\"tj\",\"mn\":\"mn\"}};window.isLoggedIn = false;",
+    "https://clip.cafe/js/autocomplete-unified.js?i=1780551707",
+    "https://clip.cafe/js/search-select.js?i=1769240009",
+    "https://clip.cafe/js/main_min.js?i=1785594001",
+    "\n\tif (typeof startunder !== 'function') { var startunder = function() { return true; }\t}\n\tif (typeof initAds !== 'function') { var initAds = function() { return true; }\t}\n\t",
+    "\n            function initMain(){\n                var lazyLoadInstance = new LazyLoad({\n                    elements_selector: \".lazyImg\",\n                    threshold: 700,\n                    class_error: \"lazyImgError\"\n                });\n\n                if(getCookie('floater')){\n                    \n                }\n\n                \n\n                if(typeof showLangDetectedDialog==='function')showLangDetectedDialog();\n            }\n          \n            window.addEventListener('load', () => {\n                registerSW();\n              });\n           \n              // Register the Service Worker\n              async function registerSW() {\n                if ('serviceWorker' in navigator) {\n                  try {\n                    await navigator.serviceWorker.register('/serviceworker.js');\n                  }\n                  catch (e) {\n                    // Silent fail - SW is optional for functionality\n                  }\n                }\n              }\n\n\n        ",
+    "\n\n      function toggleNavDropdown(event, id) {\n          event.preventDefault();\n          event.stopPropagation();\n          \n          var dropdown = document.getElementById(id);\n          var allDropdowns = document.getElementsByClassName('nav-dropdown');\n          var isCurrentlyOpen = dropdown.classList.contains('show');\n\n          // Close all dropdowns first\n          for (var i = 0; i < allDropdowns.length; i++) {\n              allDropdowns[i].classList.remove('show');\n          }\n          \n          // Re-open if it wasn't open\n          if (!isCurrentlyOpen && dropdown) {\n              dropdown.classList.add('show');\n          }\n      }\n\n      // Close dropdowns when clicking outside\n      document.addEventListener('click', function(e) {\n          if (!e.target.closest('.nav-dropdown-wrapper')) {\n              var dropdowns = document.getElementsByClassName('nav-dropdown');\n              for (var i = 0; i < dropdowns.length; i++) {\n                  dropdowns[i].classList.remove('show');\n              }\n          }\n      });\n\n      // Toggle mobile language menu\n      function toggleMobileLangMenu() {\n          var switcher = document.querySelector('.mobile-lang-switcher');\n          if (switcher) {\n              switcher.classList.toggle('open');\n          }\n      }\n\n      // Switch language by setting cookie + localStorage and reloading\n      function switchLanguage(lang) {\n          document.cookie = 'preferred_lang=' + lang + ';path=/;max-age=31536000;SameSite=Lax' + (location.protocol === 'https:' ? ';Secure' : '');\n          try { localStorage.setItem('preferred_lang', lang); } catch(e) {}\n          window.location.reload();\n      }\n      ",
+    "\n            (function(){\n                // Check if banner was dismissed\n                try {\n                if(!localStorage.getItem('hide_walkstreet_banner')){\n                    var banner = document.getElementById('walkstreet-banner');\n                    if(banner){\n                        banner.style.display = 'flex';\n                        // Delayed slide-up entrance\n                        setTimeout(function(){\n                            banner.classList.add('ws-show');\n                            document.body.classList.add('has-banner');\n                        }, 1200);\n\n                        // Close handler — slide out, then hide\n                        document.getElementById('walkstreet-close').addEventListener('click', function(e){\n                            e.preventDefault();\n                            banner.classList.remove('ws-show');\n                            document.body.classList.remove('has-banner');\n                            setTimeout(function(){ banner.style.display = 'none'; }, 400);\n                            localStorage.setItem('hide_walkstreet_banner', '1');\n                        });\n                    }\n                }\n                } catch(e) {}\n            })();\n        ",
+    "\n        // Remove preload class after page loads to enable transitions\n        window.addEventListener('load', function() {\n          document.body.classList.remove('preload');\n          try { sessionStorage.removeItem('_lr'); } catch(e) {}\n        });\n      ",
+    "\n\n    var plyrloaded = false;\n    var plyrloadingstarted = false;\n\n\n    ",
+    "\n    document.addEventListener(\"DOMContentLoaded\", function() {\n        const input = document.getElementById('search-input');\n        const placeholders = [\n            \"may the force be with you\",\n            \"I'll be back\",\n            \"to infinity and beyond\",\n            \"keep calm and carry on\",\n            \"elementary, my dear Watson\",\n            \"here's looking at you, kid\",\n            \"you can't handle the truth!\",\n            \"I'll have what she's having\",\n            \"life is like a box of chocolates\",\n            \"Houston, we have a problem\",\n            \"you talking to me?\",\n            \"just keep swimming\",\n            \"why so serious?\",\n            \"I see dead people\",\n            \"hasta la vista, baby\",\n            \"go ahead, make my day\",\n            \"there's no place like home\",\n            \"I'm the king of the world!\",\n            \"eternal sunshine of the spotless mind\",\n            \"you had me at hello\",\n            \"I'm gonna make him an offer he can't refuse\",\n            \"you're gonna need a bigger boat\",\n            \"my precious\",\n            \"carpe diem. Seize the day, boys\",\n            \"keep your friends close, but your enemies closer\",\n            \"frankly, my dear, I don't give a damn\",\n            \"here's Johnny!\",\n            \"I love the smell of napalm in the morning\"\n        ];\n        let currentText = '';\n        let isDeleting = false;\n        let charIndex = 0;\n        let iteration = 0;\n        let currentIndex = Math.floor(Math.random() * placeholders.length);\n        \n        function type() {\n            const typingSpeed = isDeleting ? 20 : 20 + Math.random() * 10;\n            const deleteSpeed = 10;\n            \n    \n            if (isDeleting) {\n                if (charIndex > 0) {\n                    currentText = placeholders[currentIndex].substring(0, charIndex - 1);\n                    charIndex--;\n                    input.placeholder = currentText;\n                    setTimeout(type, deleteSpeed);\n                } else {\n                    isDeleting = false;\n                    currentIndex = Math.floor(Math.random() * placeholders.length);\n                    setTimeout(type, 500);\n                }\n            } else {\n                if (charIndex < placeholders[currentIndex].length) {\n                    currentText = placeholders[currentIndex].substring(0, charIndex + 1);\n                    charIndex++;\n                    input.placeholder = currentText;\n                    setTimeout(type, typingSpeed);\n                } else {\n                    isDeleting = true;\n                    const delaynext = 2000+(iteration*500);\n                    \n                    setTimeout(type, delaynext);\n                    iteration++;\n                }\n            }\n        }\n    \n        type();\n    });\n\n    \n    \n    \n\n",
+    "\n    {\n        \"@context\": \"https://schema.org\",\n        \"@type\": \"Organization\",\n        \"name\": \"Clip.Cafe\",\n        \"url\": \"https://clip.cafe\",\n        \"logo\": \"https://clip.cafe/img/clipcafe.png\",\n        \"image\": \"https://clip.cafe/img/clipcafebig.jpg\"\n    }\n    ",
+    "\n    {\n        \"@context\": \"https://schema.org\",\n        \"@type\": \"Website\",\n        \"url\": \"https://clip.cafe\",\n        \"image\": \"https://clip.cafe/img/clipcafe.png\",\n        \"potentialAction\": {\n            \"@type\": \"SearchAction\",\n            \"target\": \"https://clip.cafe/s/{search_term_string}\",\n            \"query-input\": \"required name=search_term_string\"\n        }\n    }\n    ",
+    "\n    function openSupportChat(){\n        try {\n            if (typeof window.BrevoConversations === \"function\") {\n                window.BrevoConversations(\"openChat\", true);\n                return;\n            }\n            if (!document.getElementById(\"brevo-convo-script\")) {\n                window.BrevoConversationsID = \"64b5a57d072c447de967a09b\";\n                window.BrevoConversations = window.BrevoConversations || function(){\n                    (window.BrevoConversations.q = window.BrevoConversations.q || []).push(arguments);\n                };\n                var s = document.createElement(\"script\");\n                s.id = \"brevo-convo-script\";\n                s.async = true;\n                s.src = \"https://conversations-widget.brevo.com/brevo-conversations.js\";\n                s.onload = function(){ setTimeout(function(){\n                    try { window.BrevoConversations(\"openChat\", true); } catch(e) {}\n                }, 800); };\n                document.head.appendChild(s);\n            } else {\n                window.BrevoConversations(\"openChat\", true);\n            }\n        } catch(e) {}\n    }\n    ",
+    "\n    \n    ",
+    "https://clip.cafe/security-cleanup.js?v=1785673625",
+    "https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496"
+  ],
+  "media": [
+    {
+      "url": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+      "type": "document",
+      "method": "GET",
+      "headers": {
+        "accept-language": "en-US",
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Linux\""
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/bg.svg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/css/style_min.css?i=1785596521",
+      "type": "stylesheet",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-F67NFJ4Z8K&gtm=45je67t1v9189463256za200zd9189463256&_p=1785673625303&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAEAAQ&ae=a&are=1&cid=544428141.1785673611&frm=0&ngs=1&pscdl=noapi&rcb=12&sr=1365x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B149.0.7827.55%7CChromium%3B149.0.7827.55%7CNot)A%253BBrand%3B24.0.0.0&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=en-us&_s=1&tag_exp=115938465~115938468~118897920~118897930~119896802~120222308&sid=1785673610&sct=1&seg=1&dl=https%3A%2F%2Fclip.cafe%2F%3Fs%3Dmug%2Bof%2Bbeer%2Binside%2Bthis%2Btook&dt=Clip.Cafe%20-%20Movie%20Clip%20database%20with%20over%205%20million%20quotes%20from%2020%2C000%20movies&en=view_search_results&ep.search_term=mug%20of%20beer%20inside%20this%20took&tfd=274",
+      "type": "fetch",
+      "method": "POST",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-F67NFJ4Z8K&gtm=45je67t1v9189463256za200zd9189463256&_p=1785673625303&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AAAAAAQ&are=1&cid=544428141.1785673611&frm=0&ngs=1&pscdl=noapi&rcb=12&sr=1365x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B149.0.7827.55%7CChromium%3B149.0.7827.55%7CNot)A%253BBrand%3B24.0.0.0&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=en-us&_s=2&tag_exp=115938465~115938468~118897920~118897930~119896802~120222308&sid=1785673610&sct=1&seg=1&dl=https%3A%2F%2Fclip.cafe%2F%3Fs%3Dmug%2Bof%2Bbeer%2Binside%2Bthis%2Btook&dt=Clip.Cafe%20-%20Movie%20Clip%20database%20with%20over%205%20million%20quotes%20from%2020%2C000%20movies&en=page_view&_ee=1&_et=2&tfd=283",
+      "type": "fetch",
+      "method": "POST",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/js/i18n.js?i=1770154920",
+      "type": "script",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/js/autocomplete-unified.js?i=1780551707",
+      "type": "script",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/js/search-select.js?i=1769240009",
+      "type": "script",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/js/main_min.js?i=1785594001",
+      "type": "script",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/walkstreet-icon.png",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/clipcafe-logo.svg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/search.svg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/close.svg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/inception-2010.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/interstellar-2014.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/the-dark-knight-2008.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/avatar-2009.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/the-avengers-2012.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/deadpool-2016.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/avengers-infinity-war-2018.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/fight-club-1999.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/guardians-of-the-galaxy-2014.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/pulp-fiction-1994.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/harry-potter-the-sorcerers-stone-2001.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/forrest-gump-1994.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/iron-man-2008.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/django-unchained-2012.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/the-shawshank-redemption-1994.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/the-matrix-1999.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/titanic-1997.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/posters/500/the-lord-of-the-rings-the-fellowship-of-the-ring-2001.jpg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/e.svg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/security-cleanup.js?v=1785673625",
+      "type": "script",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/reddit.svg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/discord2.svg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/img/twitter.svg",
+      "type": "image",
+      "method": "GET",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    },
+    {
+      "url": "https://clip.cafe/cdn-cgi/rum?",
+      "type": "xhr",
+      "method": "POST",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "https://clip.cafe/?s=mug+of+beer+inside+this+took",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "content-type": "application/json",
+        "sec-ch-ua-mobile": "?0",
+        "accept-language": "en-US"
+      }
+    },
+    {
+      "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-F67NFJ4Z8K&gtm=45je67t1v9189463256za200zd9189463256&_p=1785673625303&gcd=13l3l3l3l1l1&npa=0&dma=0&_eu=AEAAAAQ&ae=a&are=1&cid=544428141.1785673611&frm=0&ngs=1&pscdl=noapi&rcb=12&sr=1365x900&uaa=x86&uab=64&uafvl=HeadlessChrome%3B149.0.7827.55%7CChromium%3B149.0.7827.55%7CNot)A%253BBrand%3B24.0.0.0&uam=&uamb=0&uap=Linux&uapv=&uaw=0&ul=en-us&_s=3&tag_exp=115938465~115938468~118897920~118897930~119896802~120222308&sid=1785673610&sct=1&seg=1&dl=https%3A%2F%2Fclip.cafe%2F%3Fs%3Dmug%2Bof%2Bbeer%2Binside%2Bthis%2Btook&dt=Clip.Cafe%20-%20Movie%20Clip%20database%20with%20over%205%20million%20quotes%20from%2020%2C000%20movies&en=scroll&epn.percent_scrolled=90&_et=6&tfd=5284",
+      "type": "fetch",
+      "method": "POST",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "referer": "",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+        "sec-ch-ua": "\"HeadlessChrome\";v=\"149\", \"Chromium\";v=\"149\", \"Not)A;Brand\";v=\"24\"",
+        "accept-language": "en-US",
+        "sec-ch-ua-mobile": "?0"
+      }
+    }
+  ]
+}
