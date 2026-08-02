@@ -1,0 +1,2 @@
+Render the complete 19.84-second Green Dragon excerpt as a synchronized Horn preview.
+The source excerpt already ends at the owner-requested first-stanza conclusion.
