@@ -1,0 +1,150 @@
+name: Extract second Horn with impersonation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/extract-second-horn-impersonated.yml
+      - second-horn-impersonated-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/second-horn-source-inspection
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install yt-dlp browser impersonation and media tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install 'yt-dlp[curl-cffi]>=2026.7.23' faster-whisper
+          yt-dlp --version
+          yt-dlp --list-impersonate-targets | tee /tmp/impersonate-targets.txt
+
+      - name: Extract source and build preview package
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf impersonated-extract impersonated-output
+          mkdir -p impersonated-extract impersonated-output
+          URL='https://www.youtube.com/watch?v=xjItqTkLaU4'
+
+          download_ok=0
+          attempts=(
+            'web_safari,web_creator,android_vr,tv_embedded'
+            'web_safari,mweb,android_vr'
+            'tv,web_embedded,android_vr'
+            'web,web_safari'
+          )
+
+          for clients in "${attempts[@]}"; do
+            echo "Trying clients: $clients"
+            rm -f impersonated-extract/source.* impersonated-extract/*.part
+            if yt-dlp \
+              --impersonate chrome \
+              --js-runtimes node \
+              --extractor-retries 5 \
+              --fragment-retries 5 \
+              --retry-sleep extractor:3 \
+              --retry-sleep fragment:2 \
+              --extractor-args "youtube:player_client=$clients" \
+              --no-playlist \
+              --format 'bestvideo[height<=1080]+bestaudio/best[height<=1080]' \
+              --merge-output-format mkv \
+              --download-sections '*0-00:01:10' \
+              --force-keyframes-at-cuts \
+              --write-info-json \
+              --write-subs --write-auto-subs --sub-langs 'en.*,en' --sub-format vtt \
+              --output 'impersonated-extract/source.%(ext)s' \
+              "$URL"; then
+              download_ok=1
+              break
+            fi
+          done
+
+          if [[ "$download_ok" != 1 ]]; then
+            echo 'All impersonated client attempts failed' >&2
+            exit 1
+          fi
+
+          SOURCE="$(find impersonated-extract -maxdepth 1 -type f \( -name 'source.mkv' -o -name 'source.mp4' -o -name 'source.webm' \) | head -n 1)"
+          test -n "$SOURCE"
+          ffprobe -v error -print_format json -show_streams -show_format "$SOURCE" > impersonated-extract/source-probe.json
+          ffmpeg -y -i "$SOURCE" -vn -ac 1 -ar 16000 -c:a pcm_s16le impersonated-extract/source.wav
+
+          python <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+
+          root = Path('impersonated-extract')
+          model = WhisperModel('base.en', device='cpu', compute_type='int8')
+          segments, info = model.transcribe(str(root / 'source.wav'), beam_size=5, vad_filter=True, word_timestamps=True)
+          rows = []
+          words = []
+          for segment in segments:
+              rows.append({'start': round(segment.start, 3), 'end': round(segment.end, 3), 'text': segment.text.strip()})
+              for word in segment.words or []:
+                  words.append({'start': round(word.start, 3), 'end': round(word.end, 3), 'word': word.word.strip()})
+          (root / 'transcript.json').write_text(json.dumps(rows, indent=2), encoding='utf-8')
+          (root / 'words.json').write_text(json.dumps(words, indent=2), encoding='utf-8')
+          (root / 'transcript.txt').write_text('\n'.join(f"{r['start']:07.3f}-{r['end']:07.3f}  {r['text']}" for r in rows) + '\n', encoding='utf-8')
+
+          candidates = []
+          for index, row in enumerate(rows):
+              normalized = re.sub(r'[^a-z0-9 ]+', ' ', row['text'].lower())
+              if any(term in normalized for term in ('beer', 'took', 'mug', 'brook')):
+                  candidates.append({'index': index, 'match': row, 'context': rows[max(0,index-1):min(len(rows),index+2)]})
+          (root / 'cutoff-candidates.json').write_text(json.dumps(candidates, indent=2), encoding='utf-8')
+          print((root / 'transcript.txt').read_text())
+          print('CUTOFF', json.dumps(candidates, indent=2))
+          PY
+
+          DURATION="$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$SOURCE")"
+          INTERVAL="$(python -c "print(max(float('$DURATION')/25,0.25))")"
+          ffmpeg -y -i "$SOURCE" -vf "fps=1/${INTERVAL},scale=320:-2,tile=5x5:padding=8:margin=8" -frames:v 1 impersonated-extract/contact-sheet.jpg
+
+          cp impersonated-extract/source-probe.json impersonated-output/
+          cp impersonated-extract/transcript.json impersonated-output/
+          cp impersonated-extract/words.json impersonated-output/
+          cp impersonated-extract/transcript.txt impersonated-output/
+          cp impersonated-extract/cutoff-candidates.json impersonated-output/
+          cp impersonated-extract/contact-sheet.jpg impersonated-output/
+          cp impersonated-extract/source.info.json impersonated-output/ 2>/dev/null || true
+          cp impersonated-extract/source.en*.vtt impersonated-output/ 2>/dev/null || true
+          cp /tmp/impersonate-targets.txt impersonated-output/
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add impersonated-output
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: record impersonated second Horn source'
+            git push origin HEAD:tmp/second-horn-source-inspection
+          fi
+
+      - name: Upload extraction package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: second-horn-impersonated-extraction
+          path: |
+            impersonated-output/
+            impersonated-extract/source-probe.json
+            impersonated-extract/transcript.txt
+            impersonated-extract/cutoff-candidates.json
+            impersonated-extract/contact-sheet.jpg
+            /tmp/impersonate-targets.txt
+          if-no-files-found: warn
+          retention-days: 3
