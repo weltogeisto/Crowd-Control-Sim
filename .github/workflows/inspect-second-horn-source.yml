@@ -8,7 +8,7 @@ on:
       - second-horn-inspection-trigger.txt
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   inspect:
@@ -16,6 +16,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: tmp/second-horn-source-inspection
 
       - uses: actions/setup-python@v5
         with:
@@ -26,30 +28,187 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg jq
           python -m pip install --upgrade pip
-          python -m pip install "yt-dlp>=2026.7.23" "faster-whisper>=1.1.1"
+          python -m pip install requests "yt-dlp>=2026.7.23" "faster-whisper>=1.1.1"
 
-      - name: Download and inspect source
+      - name: Resolve, download, and inspect source
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p inspection
-          URL='https://www.youtube.com/watch?v=xjItqTkLaU4'
+          rm -rf inspection inspection-output
+          mkdir -p inspection inspection-output
 
-          yt-dlp --dump-single-json --no-playlist "$URL" > inspection/metadata.json
-          yt-dlp \
-            --no-playlist \
-            --format 'bestvideo*+bestaudio/best' \
-            --merge-output-format mp4 \
-            --write-subs --write-auto-subs \
-            --sub-langs 'en.*,en' --sub-format vtt \
-            --output 'inspection/source.%(ext)s' \
-            "$URL"
+          cat > inspection/resolve_source.py <<'PY'
+          import json
+          import re
+          import sys
+          from pathlib import Path
+          from urllib.parse import urljoin
 
-          SOURCE="$(find inspection -maxdepth 1 -type f -name 'source.*' ! -name '*.vtt' | head -n 1)"
+          import requests
+
+          VIDEO_ID = "xjItqTkLaU4"
+          ROOT = Path("inspection")
+          INSTANCES = [
+              "https://pipedapi.kavin.rocks",
+              "https://pipedapi.leptons.xyz",
+              "https://pipedapi.nosebs.ru",
+              "https://pipedapi-libre.kavin.rocks",
+              "https://piped-api.privacy.com.de",
+              "https://pipedapi.adminforge.de",
+              "https://api.piped.yt",
+              "https://pipedapi.drgns.space",
+              "https://pipedapi.owo.si",
+              "https://pipedapi.ducks.party",
+              "https://piped-api.codespace.cz",
+              "https://pipedapi.reallyaweso.me",
+              "https://api.piped.private.coffee",
+              "https://pipedapi.darkness.services",
+              "https://pipedapi.orangenet.cc",
+          ]
+          SESSION = requests.Session()
+          SESSION.headers.update({
+              "User-Agent": "Mozilla/5.0 (Linux; Android 16; Pixel 9) AppleWebKit/537.36 Chrome/138 Mobile Safari/537.36",
+              "Accept": "application/json,text/plain,*/*",
+          })
+
+          errors = []
+          payload = None
+          selected_instance = None
+          for instance in INSTANCES:
+              try:
+                  response = SESSION.get(f"{instance}/streams/{VIDEO_ID}", timeout=25)
+                  response.raise_for_status()
+                  candidate = response.json()
+                  if not isinstance(candidate, dict):
+                      raise RuntimeError("response is not an object")
+                  if candidate.get("error"):
+                      raise RuntimeError(str(candidate.get("error")))
+                  if not candidate.get("videoStreams"):
+                      raise RuntimeError("no videoStreams")
+                  payload = candidate
+                  selected_instance = instance
+                  break
+              except Exception as exc:
+                  errors.append({"instance": instance, "error": repr(exc)})
+
+          if payload is None:
+              (ROOT / "piped-errors.json").write_text(json.dumps(errors, indent=2), encoding="utf-8")
+              print(json.dumps(errors, indent=2), file=sys.stderr)
+              raise SystemExit("No Piped instance resolved the source")
+
+          (ROOT / "piped-response.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+          def resolution(stream):
+              raw = str(stream.get("quality") or stream.get("resolution") or "")
+              match = re.search(r"(\d{3,4})", raw)
+              return int(match.group(1)) if match else 0
+
+          def bitrate(stream):
+              try:
+                  return int(stream.get("bitrate") or 0)
+              except Exception:
+                  return 0
+
+          def video_score(stream):
+              text = " ".join(str(stream.get(key) or "") for key in ("format", "mimeType", "codec", "quality")).lower()
+              height = resolution(stream)
+              within_target = 1 if 360 <= height <= 1080 else 0
+              h264 = 1 if any(token in text for token in ("h264", "avc1", "video/mp4", "mpeg_4")) else 0
+              return (within_target, h264, min(height, 1080), bitrate(stream))
+
+          def audio_score(stream):
+              text = " ".join(str(stream.get(key) or "") for key in ("format", "mimeType", "codec")).lower()
+              compatible = 1 if any(token in text for token in ("audio/mp4", "m4a", "aac", "opus", "webm")) else 0
+              return (compatible, bitrate(stream))
+
+          videos = [stream for stream in payload.get("videoStreams", []) if stream.get("url")]
+          audios = [stream for stream in payload.get("audioStreams", []) if stream.get("url")]
+          if not videos:
+              raise SystemExit("Resolved payload contained no downloadable video URL")
+
+          video = max(videos, key=video_score)
+          audio = max(audios, key=audio_score) if audios else None
+
+          def absolutize(url):
+              return urljoin(selected_instance + "/", url)
+
+          selection = {
+              "videoId": VIDEO_ID,
+              "instance": selected_instance,
+              "title": payload.get("title"),
+              "uploader": payload.get("uploader"),
+              "duration": payload.get("duration"),
+              "description": payload.get("description"),
+              "video": {key: video.get(key) for key in ("quality", "format", "mimeType", "codec", "bitrate", "videoOnly")},
+              "audio": ({key: audio.get(key) for key in ("quality", "format", "mimeType", "codec", "bitrate")} if audio else None),
+              "subtitles": payload.get("subtitles") or [],
+              "resolutionErrors": errors,
+          }
+          (ROOT / "selection.json").write_text(json.dumps(selection, indent=2), encoding="utf-8")
+          (ROOT / "video-url.txt").write_text(absolutize(video["url"]), encoding="utf-8")
+          if audio:
+              (ROOT / "audio-url.txt").write_text(absolutize(audio["url"]), encoding="utf-8")
+
+          for index, subtitle in enumerate(payload.get("subtitles") or []):
+              code = str(subtitle.get("code") or subtitle.get("name") or "").lower()
+              url = subtitle.get("url")
+              if url and (code.startswith("en") or not index):
+                  try:
+                      subtitle_response = SESSION.get(absolutize(url), timeout=25)
+                      subtitle_response.raise_for_status()
+                      (ROOT / "source-subtitles.vtt").write_bytes(subtitle_response.content)
+                      break
+                  except Exception as exc:
+                      errors.append({"subtitle": url, "error": repr(exc)})
+
+          print(json.dumps(selection, indent=2))
+          PY
+
+          if ! python inspection/resolve_source.py; then
+            echo "Piped resolution failed; trying alternate YouTube player clients"
+            yt-dlp \
+              --js-runtimes node \
+              --extractor-args 'youtube:player_client=web_safari,web_embedded,tv_embedded,android_vr' \
+              --impersonate chrome \
+              --no-playlist \
+              --format 'bestvideo[height<=1080]+bestaudio/best[height<=1080]' \
+              --merge-output-format mkv \
+              --write-subs --write-auto-subs --sub-langs 'en.*,en' --sub-format vtt \
+              --output 'inspection/source.%(ext)s' \
+              'https://www.youtube.com/watch?v=xjItqTkLaU4'
+          else
+            VIDEO_URL="$(cat inspection/video-url.txt)"
+            curl --fail --location --retry 4 --retry-all-errors --connect-timeout 20 --max-time 300 \
+              -A 'Mozilla/5.0 (Linux; Android 16; Pixel 9) AppleWebKit/537.36 Chrome/138 Mobile Safari/537.36' \
+              -e 'https://piped.video/' \
+              "$VIDEO_URL" -o inspection/raw-video.bin
+
+            if [[ -f inspection/audio-url.txt ]]; then
+              AUDIO_URL="$(cat inspection/audio-url.txt)"
+              curl --fail --location --retry 4 --retry-all-errors --connect-timeout 20 --max-time 300 \
+                -A 'Mozilla/5.0 (Linux; Android 16; Pixel 9) AppleWebKit/537.36 Chrome/138 Mobile Safari/537.36' \
+                -e 'https://piped.video/' \
+                "$AUDIO_URL" -o inspection/raw-audio.bin
+              ffmpeg -y -i inspection/raw-video.bin -i inspection/raw-audio.bin \
+                -map 0:v:0 -map 1:a:0 -c copy -shortest inspection/source.mkv
+            else
+              ffmpeg -y -i inspection/raw-video.bin -map 0:v:0 -map 0:a? -c copy inspection/source.mkv
+            fi
+          fi
+
+          SOURCE="$(find inspection -maxdepth 1 -type f \( -name 'source.mkv' -o -name 'source.mp4' -o -name 'source.webm' \) | head -n 1)"
           test -n "$SOURCE"
           ffprobe -v error -print_format json -show_streams -show_format "$SOURCE" > inspection/source-probe.json
 
-          ffmpeg -y -i "$SOURCE" -vf "fps=1/2,scale=360:-2,tile=5x5:padding=8:margin=8" -frames:v 1 inspection/contact-sheet.jpg
+          DURATION="$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$SOURCE")"
+          INTERVAL="$(python - "$DURATION" <<'PY'
+          import sys
+          duration = float(sys.argv[1])
+          print(max(duration / 25.0, 0.25))
+          PY
+          )"
+          ffmpeg -y -i "$SOURCE" -vf "fps=1/${INTERVAL},scale=320:-2,tile=5x5:padding=8:margin=8" \
+            -frames:v 1 inspection/contact-sheet.jpg
           ffmpeg -y -i "$SOURCE" -vn -ac 1 -ar 16000 -c:a pcm_s16le inspection/source.wav
 
           python <<'PY'
@@ -58,37 +217,72 @@ jobs:
           from pathlib import Path
           from faster_whisper import WhisperModel
 
-          root = Path('inspection')
-          model = WhisperModel('base.en', device='cpu', compute_type='int8')
-          segments, info = model.transcribe(str(root / 'source.wav'), beam_size=5, vad_filter=True)
+          root = Path("inspection")
+          model = WhisperModel("base.en", device="cpu", compute_type="int8")
+          segments, info = model.transcribe(str(root / "source.wav"), beam_size=5, vad_filter=True, word_timestamps=True)
           rows = []
-          for seg in segments:
-              text = seg.text.strip()
-              rows.append({'start': round(seg.start, 3), 'end': round(seg.end, 3), 'text': text})
-          (root / 'whisper-segments.json').write_text(json.dumps(rows, indent=2), encoding='utf-8')
-          (root / 'whisper-transcript.txt').write_text('\n'.join(f"{r['start']:07.3f}-{r['end']:07.3f}  {r['text']}" for r in rows) + '\n', encoding='utf-8')
+          words = []
+          for segment in segments:
+              text = segment.text.strip()
+              rows.append({"start": round(segment.start, 3), "end": round(segment.end, 3), "text": text})
+              for word in segment.words or []:
+                  words.append({"start": round(word.start, 3), "end": round(word.end, 3), "word": word.word.strip()})
 
+          (root / "whisper-segments.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
+          (root / "whisper-words.json").write_text(json.dumps(words, indent=2), encoding="utf-8")
+          (root / "whisper-transcript.txt").write_text(
+              "\n".join(f"{row['start']:07.3f}-{row['end']:07.3f}  {row['text']}" for row in rows) + "\n",
+              encoding="utf-8",
+          )
+
+          target_terms = ("beer", "took", "bottle", "brown", "brew", "dragon", "flagon", "ale")
           candidates = []
-          for idx, row in enumerate(rows):
-              normalized = re.sub(r'[^a-z0-9 ]+', ' ', row['text'].lower())
-              if any(term in normalized.split() for term in ('beer', 'took')) or 'beer' in normalized or 'took' in normalized:
-                  candidates.append({'index': idx, **row})
-          (root / 'cutoff-candidates.json').write_text(json.dumps(candidates, indent=2), encoding='utf-8')
-          print('WHISPER LANGUAGE', info.language, info.language_probability)
-          print('--- TRANSCRIPT ---')
-          print((root / 'whisper-transcript.txt').read_text(encoding='utf-8'))
-          print('--- CUTOFF CANDIDATES ---')
+          for index, row in enumerate(rows):
+              normalized = re.sub(r"[^a-z0-9 ]+", " ", row["text"].lower())
+              if any(term in normalized for term in target_terms):
+                  window = rows[max(0, index - 1): min(len(rows), index + 2)]
+                  candidates.append({"index": index, "match": row, "context": window})
+          (root / "cutoff-candidates.json").write_text(json.dumps(candidates, indent=2), encoding="utf-8")
+          (root / "language.json").write_text(
+              json.dumps({"language": info.language, "probability": info.language_probability}, indent=2),
+              encoding="utf-8",
+          )
+
+          print("--- TRANSCRIPT ---")
+          print((root / "whisper-transcript.txt").read_text(encoding="utf-8"))
+          print("--- CUTOFF CANDIDATES ---")
           print(json.dumps(candidates, indent=2))
           PY
 
-          echo '--- METADATA SUMMARY ---'
-          jq '{id,title,uploader,duration,description,webpage_url}' inspection/metadata.json
-          echo '--- SOURCE PROBE SUMMARY ---'
-          jq '{format: .format | {duration,size,bit_rate}, streams: [.streams[] | {codec_type,codec_name,width,height,duration,sample_rate,channels}]}' inspection/source-probe.json
+          cp inspection/selection.json inspection-output/selection.json 2>/dev/null || true
+          cp inspection/source-probe.json inspection-output/source-probe.json
+          cp inspection/whisper-segments.json inspection-output/whisper-segments.json
+          cp inspection/whisper-words.json inspection-output/whisper-words.json
+          cp inspection/whisper-transcript.txt inspection-output/whisper-transcript.txt
+          cp inspection/cutoff-candidates.json inspection-output/cutoff-candidates.json
+          cp inspection/language.json inspection-output/language.json
+          cp inspection/contact-sheet.jpg inspection-output/contact-sheet.jpg
+          cp inspection/source-subtitles.vtt inspection-output/source-subtitles.vtt 2>/dev/null || true
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add inspection-output
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: record second Horn source inspection'
+            git push origin HEAD:tmp/second-horn-source-inspection
+          fi
 
       - name: Upload inspection package
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: second-horn-source-inspection
-          path: inspection/
+          path: |
+            inspection-output/
+            inspection/selection.json
+            inspection/source-probe.json
+            inspection/cutoff-candidates.json
+            inspection/whisper-transcript.txt
+            inspection/contact-sheet.jpg
+          if-no-files-found: warn
           retention-days: 3
