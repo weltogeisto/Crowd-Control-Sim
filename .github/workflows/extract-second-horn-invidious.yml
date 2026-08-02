@@ -1,0 +1,305 @@
+name: Extract second Horn through Invidious
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/extract-second-horn-invidious.yml
+      - second-horn-invidious-trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/second-horn-source-inspection
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install media tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg jq
+          python -m pip install --upgrade pip
+          python -m pip install requests faster-whisper
+
+      - name: Resolve and download through active Invidious proxies
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf invidious-extract invidious-output
+          mkdir -p invidious-extract invidious-output
+
+          cat > invidious-extract/resolve.py <<'PY'
+          import json
+          import re
+          import sys
+          import time
+          from pathlib import Path
+          from urllib.parse import urljoin, urlparse
+
+          import requests
+
+          VIDEO_ID = "xjItqTkLaU4"
+          ROOT = Path("invidious-extract")
+          SESSION = requests.Session()
+          SESSION.headers.update({
+              "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/149 Safari/537.36",
+              "Accept": "application/json,text/plain,*/*",
+              "Accept-Language": "en-US,en;q=0.9",
+          })
+
+          registry_url = "https://api.invidious.io/instances.json"
+          registry = SESSION.get(registry_url, timeout=35).json()
+          (ROOT / "instances.json").write_text(json.dumps(registry, indent=2), encoding="utf-8")
+
+          def healthy(entry):
+              name, meta = entry
+              uri = meta.get("uri") or ""
+              monitor = meta.get("monitor") or {}
+              return (
+                  meta.get("type") == "https"
+                  and uri.startswith("https://")
+                  and not monitor.get("down", False)
+              )
+
+          entries = [entry for entry in registry if isinstance(entry, list) and len(entry) == 2 and healthy(entry)]
+          entries.sort(key=lambda entry: (
+              1 if entry[1].get("api") is True else 0,
+              1 if entry[1].get("cors") is True else 0,
+              float((entry[1].get("monitor") or {}).get("uptime") or 0),
+          ), reverse=True)
+
+          # Known currently API-enabled instance first, but still retain registry fallbacks.
+          preferred = ["https://inv.zoomerville.com"]
+          uris = []
+          for uri in preferred + [entry[1].get("uri") for entry in entries]:
+              if uri and uri not in uris:
+                  uris.append(uri.rstrip("/"))
+
+          errors = []
+          payload = None
+          base_uri = None
+          api_url = None
+          for uri in uris:
+              for local in (True, False):
+                  try:
+                      candidate_url = f"{uri}/api/v1/videos/{VIDEO_ID}?local={'true' if local else 'false'}"
+                      response = SESSION.get(candidate_url, timeout=35)
+                      content_type = response.headers.get("content-type", "")
+                      if response.status_code != 200:
+                          raise RuntimeError(f"HTTP {response.status_code}: {response.text[:300]}")
+                      if "json" not in content_type and not response.text.lstrip().startswith("{"):
+                          raise RuntimeError(f"not JSON ({content_type}): {response.text[:200]}")
+                      candidate = response.json()
+                      if candidate.get("error"):
+                          raise RuntimeError(str(candidate["error"]))
+                      if not candidate.get("formatStreams") and not candidate.get("adaptiveFormats"):
+                          raise RuntimeError("no formatStreams/adaptiveFormats")
+                      payload = candidate
+                      base_uri = uri
+                      api_url = candidate_url
+                      break
+                  except Exception as exc:
+                      errors.append({"uri": uri, "local": local, "error": repr(exc)})
+              if payload is not None:
+                  break
+
+          (ROOT / "resolution-errors.json").write_text(json.dumps(errors, indent=2), encoding="utf-8")
+          if payload is None:
+              print(json.dumps(errors, indent=2), file=sys.stderr)
+              raise SystemExit("No Invidious instance returned media formats")
+
+          (ROOT / "video-api-response.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+          def absolute(raw):
+              if not raw:
+                  return None
+              if raw.startswith("//"):
+                  return "https:" + raw
+              return urljoin(base_uri + "/", raw)
+
+          def int_value(value):
+              try:
+                  return int(value or 0)
+              except Exception:
+                  return 0
+
+          def height(item):
+              if item.get("height"):
+                  return int_value(item.get("height"))
+              match = re.search(r"(\d{3,4})", str(item.get("qualityLabel") or item.get("quality") or ""))
+              return int(match.group(1)) if match else 0
+
+          def mime(item):
+              return str(item.get("type") or item.get("mimeType") or "").lower()
+
+          def video_score(item):
+              m = mime(item)
+              h = height(item)
+              usable_height = 1 if 240 <= h <= 1080 else 0
+              mp4 = 1 if "video/mp4" in m or "avc1" in m else 0
+              return (usable_height, mp4, min(h, 1080), int_value(item.get("bitrate")))
+
+          def audio_score(item):
+              m = mime(item)
+              compatible = 1 if any(token in m for token in ("audio/mp4", "mp4a", "aac", "opus", "webm")) else 0
+              return (compatible, int_value(item.get("bitrate")))
+
+          combined = []
+          for item in payload.get("formatStreams") or []:
+              if item.get("url"):
+                  combined.append(item)
+
+          adaptive = [item for item in (payload.get("adaptiveFormats") or []) if item.get("url")]
+          videos = [item for item in adaptive if mime(item).startswith("video/")]
+          audios = [item for item in adaptive if mime(item).startswith("audio/")]
+
+          selection = {
+              "videoId": VIDEO_ID,
+              "baseUri": base_uri,
+              "apiUrl": api_url,
+              "title": payload.get("title"),
+              "author": payload.get("author"),
+              "lengthSeconds": payload.get("lengthSeconds"),
+              "description": payload.get("description"),
+              "captions": payload.get("captions") or [],
+              "resolutionErrorCount": len(errors),
+          }
+
+          if combined:
+              choice = max(combined, key=video_score)
+              selection["mode"] = "combined"
+              selection["combined"] = {k: choice.get(k) for k in ("itag", "quality", "qualityLabel", "type", "container", "encoding", "resolution", "size")}
+              (ROOT / "combined-url.txt").write_text(absolute(choice["url"]), encoding="utf-8")
+          elif videos and audios:
+              video = max(videos, key=video_score)
+              audio = max(audios, key=audio_score)
+              selection["mode"] = "adaptive"
+              selection["video"] = {k: video.get(k) for k in ("itag", "quality", "qualityLabel", "type", "container", "encoding", "resolution", "bitrate", "size")}
+              selection["audio"] = {k: audio.get(k) for k in ("itag", "type", "container", "encoding", "bitrate", "audioQuality")}
+              (ROOT / "video-url.txt").write_text(absolute(video["url"]), encoding="utf-8")
+              (ROOT / "audio-url.txt").write_text(absolute(audio["url"]), encoding="utf-8")
+          else:
+              raise SystemExit(f"No usable formats combined={len(combined)} video={len(videos)} audio={len(audios)}")
+
+          for caption in payload.get("captions") or []:
+              label = str(caption.get("label") or caption.get("languageCode") or "").lower()
+              raw_url = caption.get("url")
+              if raw_url and ("english" in label or label.startswith("en")):
+                  try:
+                      caption_response = SESSION.get(absolute(raw_url), timeout=35)
+                      caption_response.raise_for_status()
+                      (ROOT / "captions.xml").write_bytes(caption_response.content)
+                      break
+                  except Exception as exc:
+                      errors.append({"caption": raw_url, "error": repr(exc)})
+
+          (ROOT / "selection.json").write_text(json.dumps(selection, indent=2), encoding="utf-8")
+          print(json.dumps(selection, indent=2))
+          PY
+
+          python invidious-extract/resolve.py
+
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36'
+          if [[ -f invidious-extract/combined-url.txt ]]; then
+            curl --fail --location --retry 5 --retry-all-errors --connect-timeout 25 --max-time 900 \
+              -A "$UA" "$(cat invidious-extract/combined-url.txt)" -o invidious-extract/source.bin
+            ffmpeg -y -i invidious-extract/source.bin -map 0:v:0 -map 0:a:0 -c copy invidious-extract/source.mkv
+          else
+            curl --fail --location --retry 5 --retry-all-errors --connect-timeout 25 --max-time 900 \
+              -A "$UA" "$(cat invidious-extract/video-url.txt)" -o invidious-extract/video.bin
+            curl --fail --location --retry 5 --retry-all-errors --connect-timeout 25 --max-time 900 \
+              -A "$UA" "$(cat invidious-extract/audio-url.txt)" -o invidious-extract/audio.bin
+            ffmpeg -y -i invidious-extract/video.bin -i invidious-extract/audio.bin \
+              -map 0:v:0 -map 1:a:0 -c copy -shortest invidious-extract/source.mkv
+          fi
+
+          ffprobe -v error -print_format json -show_streams -show_format invidious-extract/source.mkv > invidious-extract/source-probe.json
+          ffmpeg -y -i invidious-extract/source.mkv -vn -ac 1 -ar 16000 -c:a pcm_s16le invidious-extract/source.wav
+
+          python <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from faster_whisper import WhisperModel
+
+          root = Path("invidious-extract")
+          model = WhisperModel("base.en", device="cpu", compute_type="int8")
+          segments, info = model.transcribe(str(root / "source.wav"), beam_size=5, vad_filter=True, word_timestamps=True)
+          rows = []
+          words = []
+          for segment in segments:
+              rows.append({"start": round(segment.start, 3), "end": round(segment.end, 3), "text": segment.text.strip()})
+              for word in segment.words or []:
+                  words.append({"start": round(word.start, 3), "end": round(word.end, 3), "word": word.word.strip()})
+
+          (root / "transcript.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
+          (root / "words.json").write_text(json.dumps(words, indent=2), encoding="utf-8")
+          (root / "transcript.txt").write_text(
+              "\n".join(f"{row['start']:07.3f}-{row['end']:07.3f}  {row['text']}" for row in rows) + "\n",
+              encoding="utf-8",
+          )
+
+          terms = ("beer", "took", "mug", "brook")
+          candidates = []
+          for index, row in enumerate(rows):
+              normalized = re.sub(r"[^a-z0-9 ]+", " ", row["text"].lower())
+              if any(term in normalized for term in terms):
+                  candidates.append({
+                      "index": index,
+                      "match": row,
+                      "context": rows[max(0, index - 1): min(len(rows), index + 2)],
+                  })
+          (root / "cutoff-candidates.json").write_text(json.dumps(candidates, indent=2), encoding="utf-8")
+          (root / "language.json").write_text(json.dumps({"language": info.language, "probability": info.language_probability}, indent=2), encoding="utf-8")
+          print((root / "transcript.txt").read_text(encoding="utf-8"))
+          print("CUTOFF", json.dumps(candidates, indent=2))
+          PY
+
+          DURATION="$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 invidious-extract/source.mkv)"
+          INTERVAL="$(python -c "print(max(float('$DURATION')/25,0.25))")"
+          ffmpeg -y -i invidious-extract/source.mkv \
+            -vf "fps=1/${INTERVAL},scale=320:-2,tile=5x5:padding=8:margin=8" \
+            -frames:v 1 invidious-extract/contact-sheet.jpg
+
+          cp invidious-extract/selection.json invidious-output/
+          cp invidious-extract/source-probe.json invidious-output/
+          cp invidious-extract/transcript.json invidious-output/
+          cp invidious-extract/words.json invidious-output/
+          cp invidious-extract/transcript.txt invidious-output/
+          cp invidious-extract/cutoff-candidates.json invidious-output/
+          cp invidious-extract/language.json invidious-output/
+          cp invidious-extract/contact-sheet.jpg invidious-output/
+          cp invidious-extract/captions.xml invidious-output/ 2>/dev/null || true
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add invidious-output
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: record Invidious-extracted second Horn source'
+            git push origin HEAD:tmp/second-horn-source-inspection
+          fi
+
+      - name: Upload extraction package
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: second-horn-invidious-extraction
+          path: |
+            invidious-output/
+            invidious-extract/selection.json
+            invidious-extract/source-probe.json
+            invidious-extract/transcript.txt
+            invidious-extract/cutoff-candidates.json
+            invidious-extract/contact-sheet.jpg
+            invidious-extract/resolution-errors.json
+          if-no-files-found: warn
+          retention-days: 3
